@@ -7,7 +7,7 @@ import 'swiper/css/pagination';
 import { Swiper, SwiperSlide } from 'swiper/react';
 import Button from '~/components/Button';
 import config from '~/config';
-import { sliderInfo } from '~/constants';
+import { sliderInfo } from '~/utils/staticData';
 import styles from './Banner.module.scss';
 
 const cx = classNames.bind(styles);
@@ -15,8 +15,6 @@ const cx = classNames.bind(styles);
 Banner.propTypes = {};
 
 function Banner(props) {
-    // SwiperCore.use([Autoplay]);
-
     return (
         <Swiper
             modules={[Navigation, Pagination, Scrollbar, A11y, Autoplay]}

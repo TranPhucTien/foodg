@@ -2,6 +2,7 @@ import classNames from 'classnames/bind';
 import 'swiper/css';
 import 'swiper/css/pagination';
 import Banner from './components/Banner';
+import Ingredient from './components/Ingredient';
 import Work from './components/Work';
 import styles from './Home.module.scss';
 
@@ -14,6 +15,7 @@ function Home(props) {
         <div className={cx('wrapper')}>
             <Banner />
             <Work />
+            <Ingredient />
         </div>
     );
 }

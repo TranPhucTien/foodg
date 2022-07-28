@@ -1,6 +1,7 @@
 import { Container, Grid } from '@mui/material';
 import classNames from 'classnames/bind';
-import { homeWork } from '~/constants';
+import { homeWorkData } from '~/utils/staticData';
+
 import styles from './Work.module.scss';
 
 const cx = classNames.bind(styles);
@@ -16,7 +17,7 @@ function Work(props) {
 
                 <div className={cx('step')}>
                     <Grid container spacing={3}>
-                        {homeWork.map(({ img, step, content, arrow }, index) => (
+                        {homeWorkData.map(({ img, step, content, arrow }, index) => (
                             <Grid key={index} item xs={12} sm={6} lg={3}>
                                 <div className={cx('step-container')}>
                                     <div className={cx('thumb')}>
