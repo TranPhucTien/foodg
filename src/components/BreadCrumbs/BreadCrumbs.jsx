@@ -1,5 +1,5 @@
-import { LinearScale, NavigateNext } from '@mui/icons-material';
-import { Link as MuiLink, Breadcrumbs as MuiBreadcrumbs } from '@mui/material';
+import { LinearScale } from '@mui/icons-material';
+import { Breadcrumbs as MuiBreadcrumbs, Link as MuiLink } from '@mui/material';
 import classNames from 'classnames/bind';
 import { Link } from 'react-router-dom';
 import useBreadcrumbs from 'use-react-router-breadcrumbs';

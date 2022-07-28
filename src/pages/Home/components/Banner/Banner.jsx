@@ -23,9 +23,9 @@ function Banner(props) {
             spaceBetween={0}
             slidesPerView={1}
             autoplay={{
-                delay: 3000,
+                delay: 4000,
             }}
-            speed={1000}
+            speed={1500}
             navigation
             pagination={{ clickable: true }}
             allowTouchMove={false}

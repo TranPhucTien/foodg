@@ -10,7 +10,6 @@ function Order(props) {
     return (
         <div>
             <Banner title="Best Foods" />
-            <div style={{backgroundColor: '#333', height: '1000px'}}></div>
         </div>
     );
 }

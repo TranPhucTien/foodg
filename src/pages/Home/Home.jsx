@@ -1,10 +1,9 @@
 import classNames from 'classnames/bind';
-import styles from './Home.module.scss';
-import Banner from './components/Banner';
-import { Pagination } from 'swiper';
 import 'swiper/css';
 import 'swiper/css/pagination';
-import { Swiper, SwiperSlide } from 'swiper/react';
+import Banner from './components/Banner';
+import Work from './components/Work';
+import styles from './Home.module.scss';
 
 const cx = classNames.bind(styles);
 
@@ -14,6 +13,7 @@ function Home(props) {
     return (
         <div className={cx('wrapper')}>
             <Banner />
+            <Work />
         </div>
     );
 }
