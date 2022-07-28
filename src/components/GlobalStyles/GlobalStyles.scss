@@ -31,6 +31,7 @@ body {
     font-size: 1.6rem;
     line-height: 1.5;
     text-rendering: optimizespeed;
+    overflow-x: hidden;
 }
 
 button,
@@ -44,4 +45,61 @@ input,
 a {
     color: var(--text-color);
     text-decoration: none;
+}
+
+// Custom Swipe
+.swiper-button {
+    &-prev,
+    &-next {
+        display: none;
+    }
+}
+
+.swiper-pagination {
+    &-horizontal {
+        bottom: 5.6rem !important;
+    }
+
+    &-bullet {
+        position: relative;
+        width: 1.8rem;
+        height: 1.8rem;
+        margin: 0 1rem !important;
+
+        &-active {
+            background-color: #fbb403;
+        }
+
+        &::before {
+            content: '';
+            position: absolute;
+            width: 2rem;
+            height: 2rem;
+            border: 0.2rem solid #fbb403;
+            border-radius: 50%;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+        }
+    }
+}
+
+// custom material
+.material-icons {
+    vertical-align: middle;
+}
+.MuiBreadcrumbs-li {
+    &:last-child {
+        color: var(--primary) !important;
+        & > a:hover {
+            text-decoration: none;
+            cursor: default;
+        }
+    }
+}
+
+// Custom active
+.Button_wrapper__GqKsN.active {
+    text-decoration: underline;
+    color: var(--primary);
 }

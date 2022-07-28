@@ -11,14 +11,9 @@ DefaultLayout.propTypes = {
 
 function DefaultLayout({ children }) {
     return (
-        <div className={cx('wrapper')}>
+        <div>
             <Header />
-            <img src="https://food-g-app.web.app/static/media/banner-st.57953e4d.jpg" alt="banner" className={cx('img')} />
-            <div className={cx('container')}>
-                <div className={cx('content')}>
-                    {children}
-                </div>
-            </div>
+            {children}
         </div>
     );
 }
