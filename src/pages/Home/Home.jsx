@@ -7,6 +7,7 @@ import Category from './components/Category';
 import Delivery from './components/Delivery';
 import Ingredient from './components/Ingredient';
 import Product from './components/Product';
+import Reviews from './components/Reviews';
 import Work from './components/Work';
 import styles from './Home.module.scss';
 
@@ -24,6 +25,7 @@ function Home(props) {
             <Delivery />
             <Product />
             <Analysis />
+            <Reviews />
         </div>
     );
 }

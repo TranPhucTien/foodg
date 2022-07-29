@@ -30,6 +30,7 @@ import AnalysisThumb from "~/assets/images/Home/analysis-thumb.jpg";
 import ReviewOne from "~/assets/images/Home/user-review-1.jpg";
 import ReviewTwo from "~/assets/images/Home/user-review-2.jpg";
 import ReviewThree from "~/assets/images/Home/user-review-3.jpg";
+import AnReview from "~/assets/images/Home/an_review.jpg";
 
 export {
   BannerOne,

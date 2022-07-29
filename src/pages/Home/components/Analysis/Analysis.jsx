@@ -14,7 +14,6 @@ Analysis.propTypes = {};
 function Analysis() {
     const [isShow, setIsShow] = useState(false);
     const { ref: countRef, inView: isCountVisible } = useInView();
-    console.log('🚀 ~ file: Analysis.jsx ~ line 17 ~ Analysis ~ isCountVisible', isCountVisible);
 
     const toggleModal = () => {
         setIsShow(!isShow);

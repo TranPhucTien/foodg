@@ -81,6 +81,7 @@ a {
     }
 }
 
+.home-review,
 .home-product,
 .home-banner {
     .swiper-button {
@@ -119,6 +120,8 @@ a {
         }
     }
 }
+
+.home-review,
 .home-product {
     .swiper-pagination {
         &-horizontal {
@@ -126,7 +129,7 @@ a {
         }
     }
     .swiper {
-        padding-bottom: 40px;
+        padding: 40px 0;
     }
 }
 
