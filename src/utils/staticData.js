@@ -1,27 +1,13 @@
-import {
-    BannerOne,
-    BannerSecond,
-    BannerThree,
-    ArrowOne,
-    ArrowSecond,
-    ArrowThree,
-    StepOne,
-    StepTwo,
-    StepThree,
-    StepFour,
-    ProductOne,
-    ProductTwo,
-    ProductThree,
-    ProductFour,
-    ReviewOne,
-    ReviewTwo,
-    ReviewThree,
-} from './homeImages';
-import slider1 from '../assets/images/Home/banner-st.jpg';
 import slider2 from '../assets/images/Home/banner-nd.jpg';
 import slider3 from '../assets/images/Home/banner-rd.jpg';
+import slider1 from '../assets/images/Home/banner-st.jpg';
+import {
+    ArrowOne,
+    ArrowSecond,
+    ArrowThree, ProductFour, ProductOne, ProductThree, ProductTwo, ReviewOne, ReviewThree, ReviewTwo, StepFour, StepOne, StepThree, StepTwo
+} from './homeImages';
 
-import { Beef, Chicken, Coffee, Dinner, Burger, Juice, Lunch, Pork, Tea } from './homeSvgs';
+import { Beef, Burger, Chicken, Coffee, Dinner, Juice, Lunch, Pork, Tea } from './homeSvgs';
 
 // home
 const sliderInfo = [
@@ -228,16 +214,20 @@ const homeAnalysisData = [
     {
         suffix: '+',
         description: 'Cups of Coffee',
+        countEnd: 350,
     },
     {
         suffix: '+',
         description: 'Orders Everyday',
+        countEnd: 2678,
     },
     {
         description: 'Skilled Professionals',
+        countEnd: 60,
     },
     {
         description: 'Sandwichs at Hour',
+        countEnd: 30,
     },
 ];
 

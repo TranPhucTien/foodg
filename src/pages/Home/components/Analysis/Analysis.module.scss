@@ -1,0 +1,256 @@
+.wrapper {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    text-align: center;
+    min-height: 75rem;
+
+    background-position: center bottom;
+    background-size: cover;
+    background-repeat: no-repeat;
+    background-attachment: fixed;
+
+    &-thumb {
+        flex: 1;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+    }
+}
+
+.content {
+    position: relative;
+    width: 17.5rem;
+    height: 17.5rem;
+
+    letter-spacing: 0.5px;
+
+    background-color: transparent;
+    cursor: pointer;
+
+    &-text {
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        z-index: 1;
+
+        width: 100%;
+        height: 100%;
+        display: flex;
+        justify-content: center;
+        flex-direction: column;
+        transform: translate(-50%, -50%);
+        border-radius: 30% 70% 70% 30% / 30% 30% 70% 70%;
+
+        background-color: var(--white);
+
+        transition: all 0.5s cubic-bezier(0.075, 0.82, 0.165, 1);
+    }
+
+    &:hover &-text {
+        background-color: var(--primary);
+    }
+
+    &-name {
+        font-size: 2.5rem;
+        color: var(--gray);
+        transition: all 0.5s cubic-bezier(0.075, 0.82, 0.165, 1);
+    }
+
+    &-price {
+        font-size: 5rem;
+        font-weight: 600;
+        letter-spacing: 0.5px;
+
+        transition: all 0.5s cubic-bezier(0.075, 0.82, 0.165, 1);
+    }
+
+    &:hover &-name,
+    &:hover &-price {
+        color: var(--white);
+    }
+
+    &:hover .btn::before {
+        background-color: var(--secondary);
+    }
+    &:hover .btn::after {
+        border-color: var(--secondary);
+    }
+    &:hover .gooey {
+        background-color: var(--primary);
+    }
+    &:hover .gooey:nth-of-type(1) {
+        right: -30%;
+        top: 0%;
+    }
+    &:hover .gooey:nth-of-type(2) {
+        bottom: -20%;
+        left: -15%;
+    }
+    &:hover .gooey:nth-of-type(3) {
+        top: -15%;
+        left: -10%;
+    }
+}
+
+.btn {
+    position: absolute;
+    right: 15px;
+    bottom: 5px;
+    z-index: 2;
+
+    width: 4.5rem;
+    height: 4.5rem;
+    border-radius: 50%;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+
+    transition: all 0.3s ease-in-out;
+
+    cursor: pointer;
+
+    &::before,
+    &::after {
+        position: absolute;
+        content: '';
+        left: 0;
+        top: 0;
+        right: 0;
+        bottom: 0;
+
+        width: 100%;
+        height: 100%;
+        border-radius: 100rem;
+    }
+
+    &::before {
+        z-index: 2;
+        background-color: var(--primary);
+        transition: all 0.3s ease-in-out;
+    }
+
+    &::after {
+        z-index: 1;
+        border: 2px solid var(--primary);
+        background-color: transparent;
+        animation: ripple 0.8s infinite ease-out;
+    }
+}
+
+.triangle {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    z-index: 3;
+
+    border-top: 8px solid transparent;
+    border-bottom: 8px solid transparent;
+    border-left: 8px solid var(--white);
+    transform: translate(-20%, -50%);
+
+    transition: all 0.2s ease-out;
+}
+
+.gooey {
+    position: absolute;
+    border-radius: 50%;
+    background-color: var(--primary-lightest);
+    transition: all 0.5s cubic-bezier(0.075, 0.82, 0.165, 1) 70ms;
+
+    &:nth-of-type(1) {
+        top: 10%;
+        right: 20%;
+        width: 10rem;
+        height: 10rem;
+    }
+    &:nth-of-type(2) {
+        bottom: 10%;
+        left: 10%;
+        width: 5rem;
+        height: 5rem;
+    }
+    &:nth-of-type(3) {
+        top: 10%;
+        left: 10%;
+        width: 7rem;
+        height: 7rem;
+    }
+}
+
+.video-container {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    z-index: 999;
+
+    display: flex;
+    visibility: hidden;
+    opacity: 0;
+}
+
+.video-container.show {
+    visibility: visible;
+    opacity: 1;
+}
+
+.modal {
+    position: absolute;
+
+    width: 100%;
+    height: 100%;
+
+    background-color: rgba(0, 0, 0, 0.2);
+}
+
+.video-container .home-video {
+    width: 50%;
+    height: 55%;
+    margin: auto;
+    box-shadow: 0 3px 15px rgba(0, 0, 0, 0.3);
+    opacity: 0;
+    transform: scale(0.3);
+    visibility: hidden;
+
+    transition: transform 0.35s ease-in-out;
+    will-change: all;
+}
+
+.home-video.show {
+    opacity: 1;
+    transform: scale(1);
+    visibility: visible;
+}
+
+.countup {
+    color: var(--white);
+    background-color: var(--primary);
+
+    &-container {
+        display: flex;
+        justify-content: center;
+        margin: 0 auto;
+        width: var(--default-layout-width);
+        padding: 70px 0;
+    }
+
+    &-content {
+        font-size: 5rem;
+        font-weight: 600;
+    }
+
+    &-desc {
+        font-size: 2rem;
+    }
+}
+
+@keyframes ripple {
+    from {
+        transform: scale(1);
+        opacity: 0.5;
+    }
+    to {
+        transform: scale(1.5);
+        opacity: 0;
+    }
+}

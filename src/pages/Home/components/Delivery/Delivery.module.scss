@@ -1,0 +1,45 @@
+.wrapper {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: var(--default-layout-width);
+    margin: 0 auto;
+}
+
+.content {
+    flex: 2;
+}
+
+.title {
+    line-height: 1.2;
+}
+
+.text {
+    margin: 10px 0 20px;
+    line-height: 1.8;
+}
+
+.contact {
+    display: flex;
+    align-items: center;
+
+    &-image {
+        max-width: 100%;
+        width: 8.5rem;
+        transform: rotateY(180deg);
+    }
+}
+
+.order {
+    &-wrapper {
+        margin: 0 20px;
+    }
+    &-number {
+        color: var(--primary);
+        font-weight: 600;
+    }
+}
+
+.animate {
+    flex: 3;
+}

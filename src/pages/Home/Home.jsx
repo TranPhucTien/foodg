@@ -1,8 +1,12 @@
 import classNames from 'classnames/bind';
 import 'swiper/css';
 import 'swiper/css/pagination';
+import Analysis from './components/Analysis';
 import Banner from './components/Banner';
+import Category from './components/Category';
+import Delivery from './components/Delivery';
 import Ingredient from './components/Ingredient';
+import Product from './components/Product';
 import Work from './components/Work';
 import styles from './Home.module.scss';
 
@@ -16,6 +20,10 @@ function Home(props) {
             <Banner />
             <Work />
             <Ingredient />
+            <Category />
+            <Delivery />
+            <Product />
+            <Analysis />
         </div>
     );
 }

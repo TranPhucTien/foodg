@@ -4,6 +4,9 @@
 
 :root {
     --primary: #fe2c55;
+    --primary-light: rgba(254, 44, 85, 0.75);
+    --primary-lighter: rgba(254, 44, 85, 0.25);
+    --primary-lightest: rgba(254, 44, 85, 0.2);
     --secondary: #fbb403;
     --white: #fff;
     --black: #000;
@@ -14,8 +17,9 @@
     --default-layout-width: 1130px;
 
     // Text
-    --text-color: #000;
-    --font-family: 'Poppins', sans-serif;
+    --text-color: rgba(0,0,0,.84);
+    // --font-family: 'Poppins', sans-serif;
+    --font-family: "Roboto", sans-serif;
     --font-secondary: 'Pangolin', cursive;
 }
 
@@ -32,7 +36,9 @@ html {
 body {
     font-family: var(--font-family);
     font-size: 1.4rem;
+    color: var(--text-color);
     line-height: 1.5;
+    font-weight: 400;
     text-rendering: optimizespeed;
     overflow-x: hidden;
 }
@@ -54,6 +60,7 @@ a {
     &-subtitle {
         color: var(--secondary);
         font-family: var(--font-secondary);
+        font-size: 1.8rem;
     }
     &-title {
         font-size: 3.2rem;
@@ -67,39 +74,59 @@ a {
 }
 
 // Custom Swipe
-.swiper-button {
-    &-prev,
-    &-next {
-        display: none;
+.home-category-container {
+    & > .swiper {
+        position: static;
+        width: 90%;
     }
 }
 
-.swiper-pagination {
-    &-horizontal {
-        bottom: 5.6rem !important;
+.home-product,
+.home-banner {
+    .swiper-button {
+        &-prev,
+        &-next {
+            display: none;
+        }
     }
 
-    &-bullet {
-        position: relative;
-        width: 1.8rem;
-        height: 1.8rem;
-        margin: 0 1rem !important;
-
-        &-active {
-            background-color: #fbb403;
+    .swiper-pagination {
+        &-horizontal {
+            bottom: 20px;
         }
 
-        &::before {
-            content: '';
-            position: absolute;
-            width: 2rem;
-            height: 2rem;
-            border: 0.2rem solid #fbb403;
-            border-radius: 50%;
-            top: 50%;
-            left: 50%;
-            transform: translate(-50%, -50%);
+        &-bullet {
+            position: relative;
+            width: 1.6rem;
+            height: 1.6rem;
+            margin: 0 1rem !important;
+
+            &-active {
+                background-color: var(--secondary);
+            }
+
+            &::before {
+                content: '';
+                position: absolute;
+                width: 2rem;
+                height: 2rem;
+                border: 0.2rem solid var(--secondary);
+                border-radius: 50%;
+                top: 50%;
+                left: 50%;
+                transform: translate(-50%, -50%);
+            }
         }
+    }
+}
+.home-product {
+    .swiper-pagination {
+        &-horizontal {
+            bottom: 0px;
+        }
+    }
+    .swiper {
+        padding-bottom: 40px;
     }
 }
 
