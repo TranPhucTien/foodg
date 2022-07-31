@@ -9,7 +9,6 @@
     justify-content: center;
     padding: 8px 0;
     margin-top: 6px;
-    width: 100%;
     height: var(--default-layout-header-height);
     transition: all 0.2s ease-out;
 
@@ -24,12 +23,19 @@
     align-items: center;
     justify-content: space-between;
     height: 100%;
-    width: var(--default-layout-width);
 }
 
 .links {
     display: flex;
     align-items: center;
+
+    &-list {
+        display: flex;
+    }
+
+    &-item {
+        list-style-type: none;
+    }
 }
 
 .actions {

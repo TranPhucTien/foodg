@@ -1,4 +1,4 @@
-import { Container, Grid } from '@mui/material';
+import { Grid } from '@mui/material';
 import classNames from 'classnames/bind';
 import { homeWorkData } from '~/utils/staticData';
 
@@ -10,8 +10,8 @@ Work.propTypes = {};
 
 function Work(props) {
     return (
-        <section className={cx('work')}>
-            <Container>
+        <section className={cx('wrapper')}>
+            <div className={cx('container')}>
                 <div className={"section-subtitle"}>Order now!</div>
                 <h2 className={"section-title"}>How it works</h2>
 
@@ -38,7 +38,7 @@ function Work(props) {
                         ))}
                     </Grid>
                 </div>
-            </Container>
+            </div>
         </section>
     );
 }

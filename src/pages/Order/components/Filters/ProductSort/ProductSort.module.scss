@@ -1,0 +1,45 @@
+.drop {
+    &-list {
+        border: 1px solid rgba(0, 0, 0, 0.15);
+        border-radius: 6px;
+        margin-top: 10px;
+        box-shadow: 0 5px 15px rgba(0, 0, 0, 0.15);
+        max-width: 100%;
+        background-color: var(--white);
+    }
+    &-item {
+        font-size: 1.4rem;
+        line-height: 1.8;
+        padding: 6px 25px;
+        list-style-type: none;
+
+        transition: all 0.08s ease-out;
+
+        &:not(:last-child) {
+            border-bottom: 1px solid rgba(0, 0, 0, 0.04);
+        }
+        &:hover {
+            background-color: rgba(0, 0, 0, 0.08);
+            cursor: pointer;
+        }
+    }
+    &-current {
+        display: flex;
+        align-items: center;
+        line-height: 1.8;
+        padding: 5px 15px;
+        border: 1px solid rgba(0, 0, 0, 0.15);
+        border-radius: 6px;
+        min-width: 16.5rem;
+        height: 46px;
+        cursor: pointer;
+
+        span {
+            font-size: 1.4rem;
+        }
+
+        svg {
+            margin-left: auto;
+        }
+    }
+}

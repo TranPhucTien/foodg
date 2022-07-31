@@ -1,8 +1,7 @@
-import classNames from 'classnames/bind';
+import { Route, Routes } from 'react-router-dom';
 import Banner from '~/components/Banner';
-import styles from './Order.module.scss';
-
-const cx = classNames.bind(styles);
+import DetailPage from './page/DetailPage';
+import ListPage from './page/ListPage';
 
 Order.propTypes = {};
 
@@ -10,6 +9,10 @@ function Order(props) {
     return (
         <div>
             <Banner title="Best Foods" />
+            <Routes>
+                <Route path="/:type/*" element={<ListPage />} />
+                <Route path="/:type/:productId/*" element={<DetailPage />} />
+            </Routes>
         </div>
     );
 }

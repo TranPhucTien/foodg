@@ -1,10 +1,8 @@
-import React from 'react';
-import PropTypes from 'prop-types';
 import classNames from 'classnames/bind';
-import styles from './Delivery.module.scss';
-import { ShipperLottie } from '~/components/Lottie';
 import SmallDeliverySvg from '~/assets/svgs/Home/small-delivery.svg';
 import Button from '~/components/Button';
+import { ShipperLottie } from '~/components/Lottie';
+import styles from './Delivery.module.scss';
 
 const cx = classNames.bind(styles);
 
@@ -12,7 +10,7 @@ Delivery.propTypes = {};
 
 function Delivery(props) {
     return (
-        <section className={cx('wrapper')}>
+        <section className={cx('wrapper', 'container')}>
             <div className={cx('content')}>
                 <div className="section-subtitle">Delivery</div>
                 <h2 className={classNames('section-title', styles.title)}>

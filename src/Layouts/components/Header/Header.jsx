@@ -32,20 +32,43 @@ function Header() {
 
     return (
         <header className={cx('wrapper', { background })}>
-            <div className={cx('inner')}>
+            <div className={cx('inner', 'container')}>
                 <div className={cx('links')}>
                     <Link to={config.routes.home} className={cx('logo')}>
                         <img src={images.logo} alt="logo" />
                     </Link>
-                    <Button navLink to={config.routes.home} text leftIcon={<HomeIcon sx={{ fontSize: iconSize }} />}>
-                        Home
-                    </Button>
-                    <Button navLink to={config.routes.order} text leftIcon={<RestaurantMenu sx={{ fontSize: iconSize }} />}>
-                        Order Online
-                    </Button>
-                    <Button navLink to={config.routes.reviews} text leftIcon={<HomeIcon sx={{ fontSize: iconSize }} />}>
-                        Reviews
-                    </Button>
+                    <ul className={cx('links-list')}>
+                        <li className={cx('links-item')}>
+                            <Button
+                                navLink
+                                to={config.routes.home}
+                                text
+                                leftIcon={<HomeIcon sx={{ fontSize: iconSize }} />}
+                            >
+                                Home
+                            </Button>
+                        </li>
+                        <li className={cx('links-item')}>
+                            <Button
+                                navLink
+                                to={`${config.routes.order}/best-food`}
+                                text
+                                leftIcon={<RestaurantMenu sx={{ fontSize: iconSize }} />}
+                            >
+                                Order Online
+                            </Button>
+                        </li>
+                        <li className={cx('links-item')}>
+                            <Button
+                                navLink
+                                to={config.routes.reviews}
+                                text
+                                leftIcon={<HomeIcon sx={{ fontSize: iconSize }} />}
+                            >
+                                Reviews
+                            </Button>
+                        </li>
+                    </ul>
                 </div>
                 <div className={cx('actions')}>
                     <IconButton size="large" aria-label="show 4 new mails" color="inherit">

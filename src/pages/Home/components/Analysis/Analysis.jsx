@@ -1,4 +1,3 @@
-import { Container, Grid } from '@mui/material';
 import classNames from 'classnames/bind';
 import { useState } from 'react';
 import CountUp from 'react-countup';
@@ -49,20 +48,24 @@ function Analysis() {
             </div>
 
             <div ref={countRef} className={cx('countup')}>
-                <div className={cx('countup-container')}>
-                    {isCountVisible && (<Grid container spacing={3}>
-                        {homeAnalysisData.map(({ description, suffix, countEnd }, index) => (
-                            <Grid key={index} item xs={12} sm={6} md={3}>
-                                <div className={cx('countup-content')}>
-                                    <span>
-                                        <CountUp start={0} end={countEnd} duration={3} separator="," />
-                                    </span>
-                                    <span>{suffix}</span>
-                                </div>
-                                <div className={cx('countup-desc')}>{description}</div>
-                            </Grid>
-                        ))}
-                    </Grid>)}
+                <div className="container">
+                    <div className={cx('countup-container')}>
+                        {isCountVisible && (
+                            <div className={cx('row')}>
+                                {homeAnalysisData.map(({ description, suffix, countEnd }, index) => (
+                                    <div key={index} className="col l-3">
+                                        <div className={cx('countup-content')}>
+                                            <span>
+                                                <CountUp start={0} end={countEnd} duration={3} separator="," />
+                                            </span>
+                                            <span>{suffix}</span>
+                                        </div>
+                                        <div className={cx('countup-desc')}>{description}</div>
+                                    </div>
+                                ))}
+                            </div>
+                        )}
+                    </div>
                 </div>
             </div>
         </section>

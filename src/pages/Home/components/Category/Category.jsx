@@ -1,5 +1,4 @@
 import { DoubleArrow } from '@mui/icons-material';
-import { Container } from '@mui/material';
 import classNames from 'classnames/bind';
 import { Autoplay, Navigation } from 'swiper';
 import { Swiper, SwiperSlide } from 'swiper/react';
