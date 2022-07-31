@@ -1,6 +1,8 @@
 import { Pagination } from '@mui/material';
 import classNames from 'classnames/bind';
-import { useEffect, useState } from 'react';
+import { useEffect, useMemo, useState } from 'react';
+import { useLocation, useNavigate } from 'react-router-dom';
+import queryString from 'query-string';
 import productApi from '~/api/productApi';
 import ProductSort from '../../components/Filters/ProductSort';
 import ProductFilters from '../../components/ProductFilter';
@@ -14,6 +16,20 @@ const cx = classNames.bind(styles);
 ListPage.propTypes = {};
 
 function ListPage(props) {
+    const navigate = useNavigate();
+    const location = useLocation();
+    const queryParams = useMemo(() => {
+        const params = queryString.parse(location.search);
+
+        return {
+            ...params,
+            _page: Number.parseInt(params._page) || 1,
+            _limit: Number.parseInt(params._limit) || 12,
+            _sort: params._sort || '0',
+            _order: params._order || '0',
+        };
+    }, [location.search]);
+
     const [productList, setProductList] = useState([]);
     const [pagination, setPagination] = useState({
         limit: 12,
@@ -21,18 +37,12 @@ function ListPage(props) {
         page: 1,
     });
     const [loading, setLoading] = useState(true);
-    const [filters, setFilters] = useState({
-        _page: 1,
-        _limit: 12,
-        _sort: '',
-        _order: '',
-    });
     const [type, setType] = useState('best-foods');
 
     useEffect(() => {
         (async () => {
             try {
-                const { data, pagination } = await productApi.getAll(type, filters);
+                const { data, pagination } = await productApi.getAll(type, queryParams);
                 setProductList(data.data);
                 setPagination(pagination);
             } catch (error) {
@@ -41,32 +51,50 @@ function ListPage(props) {
 
             setLoading(false);
         })();
-    }, [filters, type]);
+    }, [queryParams, type]);
 
     const handlePageChange = (e, page) => {
-        setFilters((prevFilters) => ({
-            ...prevFilters,
+        const filters = {
+            ...queryParams,
             _page: page,
-        }));
+        };
+
+        navigate({
+            pathname: location.pathname,
+            search: queryString.stringify(filters),
+        });
     };
 
     const handleSortChange = (newSortValue, newORderValue) => {
-        setFilters((prevFilters) => ({
-            ...prevFilters,
+        const filters = {
+            ...queryParams,
             _sort: newSortValue,
             _order: newORderValue,
-        }));
+        };
+
+        navigate({
+            pathname: location.pathname,
+            search: queryString.stringify(filters),
+        });
     };
 
     const handleFiltersChange = (newFilters) => {
         setType(newFilters);
+        const filters = {
+            ...queryParams,
+        };
+
+        navigate({
+            pathname: location.pathname,
+            search: queryString.stringify(filters),
+        });
     };
 
     return (
         <section className={cx('container')}>
             <div className={cx('row')}>
                 <div className={cx('col', 'l-2', 'm-2', 'c-0')}>
-                    <ProductFilters type={type} filters={filters} onChange={handleFiltersChange} />
+                    <ProductFilters type={type} filters={queryParams} onChange={handleFiltersChange} />
                 </div>
 
                 <div className={cx('col', 'l-10', 'm-10', 'c-12', 'product-list')}>
@@ -76,8 +104,8 @@ function ListPage(props) {
                         </div>
                         <div className={cx('col', 'l-2')}>
                             <ProductSort
-                                currentSort={filters._sort}
-                                currentOrder={filters._order}
+                                currentSort={queryParams._sort}
+                                currentOrder={queryParams._order}
                                 onChange={handleSortChange}
                             />
                         </div>
