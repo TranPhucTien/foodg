@@ -10,9 +10,10 @@ Reviews.propTypes = {
 
 function Reviews(props) {
     return (
-        <div>
+        <>
             <Banner title="reviews" />
-        </div>
+            <div className={cx('test')}></div>
+        </>
     );
 }
 

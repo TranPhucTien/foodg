@@ -44,10 +44,10 @@ body {
     text-rendering: optimizespeed;
     overflow-x: hidden;
     -webkit-tap-highlight-color: transparent;
+    scroll-behavior: smooth;
 }
 
 // Scroll bar
-// Scrollbar css
 html *::-webkit-scrollbar {
     border-radius: 0;
     width: 8px;
@@ -109,6 +109,12 @@ a {
     margin-bottom: 10px;
     padding: 8px 0 8px 12px;
     border-bottom: 1px solid rgba(0, 0, 0, 0.15);
+}
+
+// Custom active
+.Button_wrapper__GqKsN.active {
+    text-decoration: underline;
+    color: var(--primary);
 }
 
 // Custom Swipe
@@ -193,16 +199,6 @@ a {
     box-shadow: 0 3px 10px rgb(0 0 0 / 25%);
     border-radius: 4px;
     color: var(--white);
-}
-.Search_search-btn__PVDKw > .css-i4bv87-MuiSvgIcon-root {
-    width: 2.4rem;
-    height: 2.4rem;
-}
-
-// Custom active
-.Button_wrapper__GqKsN.active {
-    text-decoration: underline;
-    color: var(--primary);
 }
 
 // Custom tippy tooltip

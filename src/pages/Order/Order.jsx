@@ -7,13 +7,14 @@ Order.propTypes = {};
 
 function Order(props) {
     return (
-        <div>
+        <>
             <Banner title="Best Foods" />
             <Routes>
+                <Route path="/*" element={<ListPage />} />
                 <Route path="/:type/*" element={<ListPage />} />
                 <Route path="/:type/:productId/*" element={<DetailPage />} />
             </Routes>
-        </div>
+        </>
     );
 }
 

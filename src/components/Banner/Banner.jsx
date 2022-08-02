@@ -7,11 +7,9 @@ const cx = classNames.bind(styles);
 
 function Banner({ title, banner = bannerImg }) {
     return (
-        <div>
-            <div className={cx('image')} style={{ backgroundImage: `url('${banner}')` }}>
-                <h3 className={cx('title')}>{title}</h3>
-                <BreadCrumbs />
-            </div>
+        <div className={cx('image')} style={{ backgroundImage: `url('${banner}')` }}>
+            <h3 className={cx('title')}>{title}</h3>
+            <BreadCrumbs />
         </div>
     );
 }

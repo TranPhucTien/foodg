@@ -1,5 +1,5 @@
 import classNames from 'classnames/bind';
-import { A11y, Autoplay, Navigation, Pagination, Scrollbar } from 'swiper';
+import { Autoplay, Navigation, Pagination } from 'swiper';
 import { Swiper, SwiperSlide } from 'swiper/react';
 import { homeProductsData } from '~/utils/staticData';
 import Card from './components/Card';
@@ -28,7 +28,7 @@ function Product() {
                             delay: 5000,
                             disableOnInteraction: false,
                         }}
-                        modules={[Autoplay, Navigation, Pagination, Scrollbar, A11y]}
+                        modules={[Autoplay, Navigation, Pagination]}
                         breakpoints={{
                             0: {
                                 slidesPerView: 1,

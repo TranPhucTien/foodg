@@ -2,6 +2,11 @@ import { AllFood, Bbq, BestFood, Bread, Burger, Pizza, Sandwich, Chicken, Pork, 
 
 const typeOptions = [
     {
+        img: AllFood,
+        name: 'All food',
+        type: 'our-foods',
+    },
+    {
         img: BestFood,
         name: 'Best food',
         type: 'best-foods',
@@ -45,11 +50,6 @@ const typeOptions = [
         img: Sausage,
         name: 'Sausage',
         type: 'sausages',
-    },
-    {
-        img: AllFood,
-        name: 'Others food',
-        type: 'our-foods',
     },
 ];
 

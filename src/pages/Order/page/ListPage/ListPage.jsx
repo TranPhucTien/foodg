@@ -1,9 +1,11 @@
 import { Pagination } from '@mui/material';
 import classNames from 'classnames/bind';
-import { useEffect, useMemo, useState } from 'react';
-import { useLocation, useNavigate } from 'react-router-dom';
 import queryString from 'query-string';
+import { useCallback, useEffect, useMemo, useRef, useState } from 'react';
+import { useLocation, useNavigate } from 'react-router-dom';
 import productApi from '~/api/productApi';
+import notFound from '~/assets/svgs/NotFound/404.svg';
+import { FIRST_SHOW_ORDER } from '~/constants';
 import ProductSort from '../../components/Filters/ProductSort';
 import ProductFilters from '../../components/ProductFilter';
 import ProductList from '../../components/ProductList';
@@ -15,13 +17,15 @@ const cx = classNames.bind(styles);
 
 ListPage.propTypes = {};
 
-function ListPage(props) {
+function ListPage() {
     const navigate = useNavigate();
     const location = useLocation();
+    const listPageRef = useRef();
     const queryParams = useMemo(() => {
         const params = queryString.parse(location.search);
 
         return {
+            q: '',
             ...params,
             _page: Number.parseInt(params._page) || 1,
             _limit: Number.parseInt(params._limit) || 12,
@@ -37,14 +41,19 @@ function ListPage(props) {
         page: 1,
     });
     const [loading, setLoading] = useState(true);
-    const [type, setType] = useState('best-foods');
+    const [searchLoading, setSearchLoading] = useState(false);
+    const typeURLCurrent = location.pathname.split('/')[2];
+
+    const [type, setType] = useState(typeURLCurrent || FIRST_SHOW_ORDER);
 
     useEffect(() => {
         (async () => {
             try {
+                setSearchLoading(true);
                 const { data, pagination } = await productApi.getAll(type, queryParams);
                 setProductList(data.data);
                 setPagination(pagination);
+                setSearchLoading(false);
             } catch (error) {
                 console.log('Failed to fetch product list');
             }
@@ -54,6 +63,8 @@ function ListPage(props) {
     }, [queryParams, type]);
 
     const handlePageChange = (e, page) => {
+        listPageRef.current.scrollIntoView({ behavior: 'smooth', block: 'start' });
+
         const filters = {
             ...queryParams,
             _page: page,
@@ -78,10 +89,17 @@ function ListPage(props) {
         });
     };
 
-    const handleFiltersChange = (newFilters) => {
-        setType(newFilters);
+    const handleFiltersChange = (newType) => {
+        setType(newType);
+        navigate({ pathname: `/order/${newType}` });
+    };
+
+    const handleSearchChange = (searchValue) => {
+        listPageRef.current.scrollIntoView({ behavior: 'smooth', block: 'start' });
+
         const filters = {
             ...queryParams,
+            q: searchValue,
         };
 
         navigate({
@@ -91,35 +109,49 @@ function ListPage(props) {
     };
 
     return (
-        <section className={cx('container')}>
-            <div className={cx('row')}>
-                <div className={cx('col', 'l-2', 'm-2', 'c-0')}>
-                    <ProductFilters type={type} filters={queryParams} onChange={handleFiltersChange} />
-                </div>
-
-                <div className={cx('col', 'l-10', 'm-10', 'c-12', 'product-list')}>
-                    <div className={cx('product-filters', 'row')}>
-                        <div className={cx('col', 'l-10')}>
-                            <Search />
-                        </div>
-                        <div className={cx('col', 'l-2')}>
-                            <ProductSort
-                                currentSort={queryParams._sort}
-                                currentOrder={queryParams._order}
-                                onChange={handleSortChange}
-                            />
-                        </div>
+        <section className={cx('list-page')} ref={listPageRef}>
+            <div className={cx('container')}>
+                <div className={cx('row')}>
+                    <div className={cx('col', 'l-2', 'm-2', 'c-0')}>
+                        <ProductFilters type={type} filters={queryParams} onChange={handleFiltersChange} />
                     </div>
-                    {loading ? <SkeletonProductList /> : <ProductList data={productList} />}
 
-                    <div className={cx('pagination')}>
-                        <Pagination
-                            count={Math.ceil(pagination.total / pagination.limit)}
-                            page={pagination.page}
-                            shape="rounded"
-                            onChange={handlePageChange}
-                            size="large"
-                        />
+                    <div className={cx('col', 'l-10', 'm-10', 'c-12', 'product-list')}>
+                        <div className={cx('product-filters', 'row')}>
+                            <div className={cx('col', 'l-10')}>
+                                <Search
+                                    onChange={handleSearchChange}
+                                    searchLoading={searchLoading}
+                                    currentValue={queryParams.q}
+                                />
+                            </div>
+                            <div className={cx('col', 'l-2')}>
+                                <ProductSort
+                                    currentSort={queryParams._sort}
+                                    currentOrder={queryParams._order}
+                                    onChange={handleSortChange}
+                                />
+                            </div>
+                        </div>
+                        {loading ? (
+                            <SkeletonProductList />
+                        ) : productList.length > 0 ? (
+                            <ProductList data={productList} />
+                        ) : (
+                            <img className={cx('not-found')} src={notFound} alt="not-found" />
+                        )}
+
+                        {productList.length > 0 && (
+                            <div className={cx('pagination')}>
+                                <Pagination
+                                    count={Math.ceil(pagination.total / pagination.limit)}
+                                    page={pagination.page}
+                                    shape="rounded"
+                                    onChange={handlePageChange}
+                                    size="large"
+                                />
+                            </div>
+                        )}
                     </div>
                 </div>
             </div>

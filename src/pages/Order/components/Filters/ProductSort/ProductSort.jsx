@@ -2,7 +2,8 @@ import { ExpandMore } from '@mui/icons-material';
 import HeadlessTippy from '@tippyjs/react/headless';
 import classNames from 'classnames/bind';
 import PropTypes from 'prop-types';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
+import { useLocation } from 'react-router-dom';
 import { sortOptions } from '~/utils/Filters';
 import styles from './ProductSort.module.scss';
 
@@ -14,11 +15,32 @@ ProductSort.propTypes = {
 };
 
 function ProductSort({ currentSort, currentOrder, onChange }) {
+    const { pathname } = useLocation();
     const [result, setResult] = useState({
         value: 'Sort',
         sort: currentSort,
         order: currentOrder,
     });
+
+    useEffect(() => {
+        setResult((prev) => ({
+            ...prev,
+            value: 'Sort',
+        }));
+    }, [pathname]);
+    
+    useEffect(() => {
+        sortOptions.forEach(({sort, order, value}) => {
+            if (currentSort === sort && currentOrder === order) {
+                setResult(prev => ({
+                    ...prev,
+                    value
+                }))
+            }
+        })
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, [])
+
     const [showResult, setShowResult] = useState(false);
 
     const handleHideResult = () => {
@@ -47,7 +69,11 @@ function ProductSort({ currentSort, currentOrder, onChange }) {
                 render={(attrs) => (
                     <ul className={cx('drop-list')}>
                         {sortOptions.map(({ value, id, sort, order }) => (
-                            <li key={id} className={cx('drop-item')} onClick={() => handleSortClick(sort, order, value)}>
+                            <li
+                                key={id}
+                                className={cx('drop-item')}
+                                onClick={() => handleSortClick(sort, order, value)}
+                            >
                                 {value}
                             </li>
                         ))}

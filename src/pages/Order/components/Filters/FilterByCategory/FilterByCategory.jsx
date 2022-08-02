@@ -2,6 +2,7 @@ import classNames from 'classnames/bind';
 import PropTypes from 'prop-types';
 import { useEffect, useState } from 'react';
 import { useParams } from 'react-router-dom';
+import { FIRST_SHOW_ORDER } from '~/constants';
 import { typeOptions } from '~/utils/Filters';
 import styles from './FilterByCategory.module.scss';
 
@@ -12,7 +13,7 @@ FilterByCategory.propTypes = {
 };
 
 function FilterByCategory({ onChange }) {
-    const [type, setType] = useState('best-foods');
+    const [type, setType] = useState(FIRST_SHOW_ORDER);
     const params = useParams();
     const name = params.type;
 

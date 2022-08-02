@@ -3,15 +3,22 @@ import { Breadcrumbs as MuiBreadcrumbs, Link as MuiLink } from '@mui/material';
 import classNames from 'classnames/bind';
 import { Link } from 'react-router-dom';
 import useBreadcrumbs from 'use-react-router-breadcrumbs';
-import { publicRoutes } from '~/routes';
+import config from '~/config';
 import styles from './BreadCrumbs.module.scss';
 
 const cx = classNames.bind(styles);
 
 BreadCrumbs.propTypes = {};
 
+const listBreadCrumbs = [
+    {path: config.routes.home, breadcrumb: 'Home'},
+    {path: `${config.routes.order}`, breadcrumb: 'Order now'},
+    {path: config.routes.reviews},
+    {path: config.routes.notfound},
+];
+
 function BreadCrumbs() {
-    const breadcrumbs = useBreadcrumbs(publicRoutes);
+    const breadcrumbs = useBreadcrumbs(listBreadCrumbs);
 
     return (
         <MuiBreadcrumbs
@@ -21,7 +28,7 @@ function BreadCrumbs() {
         >
             {breadcrumbs.map(({ match, breadcrumb }, index) => (
                 <MuiLink
-                    key={match.pathname}
+                    key={index}
                     className={cx('item')}
                     underline="hover"
                     color="inherit"

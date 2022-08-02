@@ -9,8 +9,13 @@ const productApi = {
 
         // fetch product list + count
         const productList = await axiosClient.get(`/${type}`, { params: newParams });
-        const count = await axiosClient.get('/pagination', { params: newParams });
-        const total = count.data[`${type}`] || 1;
+        const count = await axiosClient.get('/pagination');
+        let total = count.data[`${type}`] || 1;
+        
+        if (newParams.q) {
+            const productListSearch = await axiosClient.get(`/${type}?q=${newParams.q}`);
+            total = productListSearch.data.length || 1;
+        }
 
         return {
             data: productList,
@@ -22,13 +27,13 @@ const productApi = {
         };
     },
 
-    get(id) {
-        const url = `/best-foods/${id}`;
+    get(type, id) {
+        const url = `/${type}/${id}`;
         return axiosClient.get(url);
     },
 
-    remove(id) {
-        const url = `/best-foods/${id}`;
+    remove(type, id) {
+        const url = `/${type}/${id}`;
         return axiosClient.delete(url);
     },
 };

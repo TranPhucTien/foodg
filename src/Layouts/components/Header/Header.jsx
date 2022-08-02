@@ -1,11 +1,12 @@
 import { Home as HomeIcon, RestaurantMenu, ShoppingBag } from '@mui/icons-material';
 import { Badge, IconButton } from '@mui/material';
 import classNames from 'classnames/bind';
-import { useEffect, useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import { Link } from 'react-router-dom';
 import images from '~/assets/images';
 import Button from '~/components/Button';
 import config from '~/config';
+import { FIRST_SHOW_ORDER } from '~/constants';
 import styles from './Header.module.scss';
 
 const cx = classNames.bind(styles);
@@ -14,7 +15,26 @@ Header.propTypes = {};
 
 function Header() {
     const [background, setBackground] = useState(false);
+    const headerRef = useRef();
     const iconSize = 24;
+
+    if (headerRef.current) {
+        let prevScrollpos = window.pageYOffset;
+
+        window.onscroll = function () {
+            // windows onscroll is run before `if in line 21`
+            if (headerRef.current) {
+                let currentScrollPos = window.pageYOffset;
+
+                if (prevScrollpos >= currentScrollPos) {
+                    headerRef.current.style.top = '0';
+                } else {
+                    headerRef.current.style.top = '-68px';
+                }
+                prevScrollpos = currentScrollPos;
+            }
+        };
+    }
 
     const listenScrollEvent = () => {
         if (window.scrollY < 100) {
@@ -31,7 +51,7 @@ function Header() {
     }, []);
 
     return (
-        <header className={cx('wrapper', { background })}>
+        <header className={cx('wrapper', { background })} ref={headerRef}>
             <div className={cx('inner', 'container')}>
                 <div className={cx('links')}>
                     <Link to={config.routes.home} className={cx('logo')}>
@@ -51,7 +71,7 @@ function Header() {
                         <li className={cx('links-item')}>
                             <Button
                                 navLink
-                                to={`${config.routes.order}/best-food`}
+                                to={`${config.routes.order}/${FIRST_SHOW_ORDER}`}
                                 text
                                 leftIcon={<RestaurantMenu sx={{ fontSize: iconSize }} />}
                             >

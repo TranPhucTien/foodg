@@ -1,1 +1,1 @@
-export const STATIC_HOST = ''
+export const FIRST_SHOW_ORDER = 'our-foods';

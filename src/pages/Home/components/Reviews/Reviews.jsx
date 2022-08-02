@@ -1,5 +1,5 @@
 import classNames from 'classnames/bind';
-import { A11y, Autoplay, Navigation, Pagination, Scrollbar } from 'swiper';
+import { Autoplay, Navigation, Pagination } from 'swiper';
 import { Swiper, SwiperSlide } from 'swiper/react';
 import BackgroundIcon from '~/components/BackgroundIcon';
 import { BackgroundIconEight, BackgroundIconFive, BackgroundIconFour, BackgroundIconSeven, BackgroundIconSix } from '~/utils/backgroundIcons';
@@ -24,7 +24,7 @@ function Reviews(props) {
                         delay: 10000,
                         disableOnInteraction: false,
                     }}
-                    modules={[Autoplay, Navigation, Pagination, Scrollbar, A11y]}
+                    modules={[Autoplay, Navigation, Pagination]}
                 >
                     {homeReviewsData.map(({ img, name, role, comment }, index) => (
                         <SwiperSlide key={index}>

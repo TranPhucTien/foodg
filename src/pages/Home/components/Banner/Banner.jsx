@@ -1,6 +1,6 @@
 import { AddCircleOutline } from '@mui/icons-material';
 import classNames from 'classnames/bind';
-import { A11y, Autoplay, Navigation, Pagination, Scrollbar } from 'swiper';
+import { Autoplay, Navigation, Pagination } from 'swiper';
 import 'swiper/css';
 import 'swiper/css/autoplay';
 import 'swiper/css/pagination';
@@ -12,18 +12,16 @@ import styles from './Banner.module.scss';
 
 const cx = classNames.bind(styles);
 
-Banner.propTypes = {};
-
-function Banner(props) {
+function Banner() {
     return (
         <section className="home-banner">
             <Swiper
-                modules={[Navigation, Pagination, Scrollbar, A11y, Autoplay]}
+                modules={[Navigation, Pagination, Autoplay]}
                 spaceBetween={0}
                 slidesPerView={1}
-                // autoplay={{
-                //     delay: 4000,
-                // }}
+                autoplay={{
+                    delay: 4000,
+                }}
                 speed={1500}
                 navigation
                 pagination={{ clickable: true }}
