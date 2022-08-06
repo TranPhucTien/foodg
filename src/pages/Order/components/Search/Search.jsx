@@ -1,7 +1,6 @@
 import { Cached, Cancel, Search as SearchIcon } from '@mui/icons-material';
 import classNames from 'classnames/bind';
 import PropTypes from 'prop-types';
-import { memo } from 'react';
 import { useEffect, useRef, useState } from 'react';
 import { useLocation } from 'react-router-dom';
 import { useDebounce } from '~/hooks';
@@ -15,14 +14,13 @@ Search.propTypes = {
     onChange: PropTypes.func,
 };
 
-function Search({ currentValue, searchLoading, onChange }) {
-    const [searchValue, setSearchValue] = useState(currentValue || '');
+function Search({ currentValue = '', searchLoading = false, onChange }) {
+    const [searchValue, setSearchValue] = useState(currentValue);
     const [loading, setLoading] = useState(false);
     const { pathname } = useLocation();
     const inputRef = useRef();
-    if (inputRef.current) console.log(inputRef.current)
 
-    const debouncedValue = useDebounce(searchValue, 500);
+    const debouncedValue = useDebounce(searchValue, 700);
 
     const handleChange = (e) => {
         const searchValue = e.target.value;
@@ -43,14 +41,10 @@ function Search({ currentValue, searchLoading, onChange }) {
     }, [searchLoading]);
 
     useEffect(() => {
-        setSearchValue('');
-        focusInput();
-    }, [pathname]);
-
-    useEffect(() => {
         setSearchValue(currentValue);
+        focusInput();
         // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, []);
+    }, [pathname]);
 
     const handleClear = () => {
         setSearchValue('');
@@ -73,13 +67,13 @@ function Search({ currentValue, searchLoading, onChange }) {
             />
             {!!searchValue && !loading && (
                 <button className={cx('clear')} onClick={handleClear}>
-                    <Cancel />
+                    <Cancel sx={{ fontSize: '20px' }} />
                 </button>
             )}
-            {loading && <Cached className={cx('loading')} />}
+            {loading && <Cached className={cx('loading')} sx={{ fontSize: '20px' }} />}
 
             <button className={cx('search-btn')} onClick={focusInput}>
-                <SearchIcon sx={{ width: '2.4rem', height: '2.4rem', marginTop: '4px' }} />
+                <SearchIcon sx={{ fontSize: '2.4rem', display: 'block', margin: 'auto' }} />
             </button>
         </div>
     );

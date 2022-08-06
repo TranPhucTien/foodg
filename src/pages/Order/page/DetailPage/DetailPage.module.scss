@@ -1,0 +1,55 @@
+.detail {
+}
+
+.content {
+    padding: 110px 80px;
+}
+
+.choose {
+    margin: 0 auto;
+    margin-bottom: 30px;
+}
+
+.table {
+    width: 100%;
+    margin-top: 40px;
+    border-spacing: 0;
+
+    &-row {
+        text-align: center;
+    }
+
+    &-title {
+        font-size: 2.8rem;
+        font-weight: 700;
+        margin-bottom: 3px;
+        text-transform: capitalize;
+
+        &:first-child {
+            font-size: 1.8rem;
+            font-weight: 700;
+        }
+    }
+
+    &-ingredients {
+        margin-top: 5px;
+    }
+
+    td {
+        padding: 12px 0;
+    }
+    td:first-child, th:first-child {
+        border-right: 1px solid #ccc;
+    }
+    th {
+        border-bottom: 1px solid #ccc;
+    }
+}
+
+
+.desc {
+    &-text {
+        color: var(--text);
+        line-height: 1.7;
+    }
+}

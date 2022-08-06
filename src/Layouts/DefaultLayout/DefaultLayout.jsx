@@ -1,5 +1,6 @@
 import classNames from 'classnames/bind';
 import PropTypes from 'prop-types';
+import Cart from '~/components/Cart';
 import Header from '../components/Header';
 import styles from './DefaultLayout.module.scss';
 
@@ -14,6 +15,7 @@ function DefaultLayout({ children }) {
         <div>
             <Header />
             {children}
+            <Cart />
             {/* <Footer /> */}
         </div>
     );

@@ -1,11 +1,11 @@
 import { Pagination } from '@mui/material';
 import classNames from 'classnames/bind';
 import queryString from 'query-string';
-import { useCallback, useEffect, useMemo, useRef, useState } from 'react';
+import { useEffect, useMemo, useRef, useState } from 'react';
 import { useLocation, useNavigate } from 'react-router-dom';
 import productApi from '~/api/productApi';
 import notFound from '~/assets/svgs/NotFound/404.svg';
-import { FIRST_SHOW_ORDER } from '~/constants';
+import { FIRST_SHOW_ORDER, GET_CURRENT_TYPE } from '~/constants';
 import ProductSort from '../../components/Filters/ProductSort';
 import ProductFilters from '../../components/ProductFilter';
 import ProductList from '../../components/ProductList';
@@ -40,24 +40,24 @@ function ListPage() {
         total: 10,
         page: 1,
     });
-    const [loading, setLoading] = useState(true);
+    const [loading, setLoading] = useState(false);
     const [searchLoading, setSearchLoading] = useState(false);
-    const typeURLCurrent = location.pathname.split('/')[2];
 
-    const [type, setType] = useState(typeURLCurrent || FIRST_SHOW_ORDER);
+    const [type, setType] = useState(GET_CURRENT_TYPE() || FIRST_SHOW_ORDER);
 
     useEffect(() => {
         (async () => {
             try {
+                setLoading(true)
                 setSearchLoading(true);
                 const { data, pagination } = await productApi.getAll(type, queryParams);
                 setProductList(data.data);
                 setPagination(pagination);
-                setSearchLoading(false);
             } catch (error) {
                 console.log('Failed to fetch product list');
             }
-
+            
+            setSearchLoading(false);
             setLoading(false);
         })();
     }, [queryParams, type]);

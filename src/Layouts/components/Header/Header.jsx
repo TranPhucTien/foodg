@@ -2,9 +2,12 @@ import { Home as HomeIcon, RestaurantMenu, ShoppingBag } from '@mui/icons-materi
 import { Badge, IconButton } from '@mui/material';
 import classNames from 'classnames/bind';
 import { useEffect, useRef, useState } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
 import { Link } from 'react-router-dom';
 import images from '~/assets/images';
 import Button from '~/components/Button';
+import { showCart } from '~/components/Cart/CartSlice';
+import { cartItemsCountSelector } from '~/components/Cart/selectors';
 import config from '~/config';
 import { FIRST_SHOW_ORDER } from '~/constants';
 import styles from './Header.module.scss';
@@ -16,6 +19,7 @@ Header.propTypes = {};
 function Header() {
     const [background, setBackground] = useState(false);
     const headerRef = useRef();
+    const cartItemCount = useSelector(cartItemsCountSelector);
     const iconSize = 24;
 
     if (headerRef.current) {
@@ -26,7 +30,7 @@ function Header() {
             if (headerRef.current) {
                 let currentScrollPos = window.pageYOffset;
 
-                if (prevScrollpos >= currentScrollPos) {
+                if (prevScrollpos >= currentScrollPos || window.scrollY < 100) {
                     headerRef.current.style.top = '0';
                 } else {
                     headerRef.current.style.top = '-68px';
@@ -50,6 +54,11 @@ function Header() {
         return () => window.removeEventListener('scroll', listenScrollEvent);
     }, []);
 
+    const dispatch = useDispatch();
+    const handleClickCart = () => {
+        dispatch(showCart());
+    };
+
     return (
         <header className={cx('wrapper', { background })} ref={headerRef}>
             <div className={cx('inner', 'container')}>
@@ -71,7 +80,8 @@ function Header() {
                         <li className={cx('links-item')}>
                             <Button
                                 navLink
-                                to={`${config.routes.order}/${FIRST_SHOW_ORDER}`}
+                                // to={`${config.routes.order}/${FIRST_SHOW_ORDER}`}
+                                to={`${config.routes.order}`}
                                 text
                                 leftIcon={<RestaurantMenu sx={{ fontSize: iconSize }} />}
                             >
@@ -91,8 +101,8 @@ function Header() {
                     </ul>
                 </div>
                 <div className={cx('actions')}>
-                    <IconButton size="large" aria-label="show 4 new mails" color="inherit">
-                        <Badge badgeContent={910} color="error">
+                    <IconButton size="large" aria-label="show 4 new mails" color="inherit" onClick={handleClickCart}>
+                        <Badge badgeContent={cartItemCount} color="error">
                             <ShoppingBag sx={{ fontSize: 36 }} />
                         </Badge>
                     </IconButton>

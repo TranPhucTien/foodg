@@ -1,0 +1,28 @@
+.wrapper {
+    position: relative;
+}
+
+.detail {
+    &-btn-handle {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        min-width: 12rem;
+    }
+    &-btn-qtn {
+        font-size: 1.4rem;
+        min-width: 3.5rem;
+        text-align: center;
+    }
+    & :is(&__btn-dec, &__btn-inc) {
+        font-size: 1.8rem;
+    }
+    &-add {
+        flex: 1;
+    }
+}
+.show-error {
+    position: absolute;
+    color: var(--primary);
+    margin-top: 4px;
+}

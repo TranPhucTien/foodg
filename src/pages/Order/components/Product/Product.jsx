@@ -2,9 +2,9 @@ import { FavoriteBorder, Room, ShoppingCartOutlined, Star } from '@mui/icons-mat
 import classNames from 'classnames/bind';
 import PropTypes from 'prop-types';
 import { useState } from 'react';
-import styles from './Product.module.scss';
+import { Link, useLocation } from 'react-router-dom';
 import imageError from '~/assets/images/image-error.png';
-import { useLocation } from 'react-router-dom';
+import styles from './Product.module.scss';
 
 const cx = classNames.bind(styles);
 
@@ -21,7 +21,7 @@ function Product({ product }) {
     };
 
     return (
-        <div className={cx('wrapper')}>
+        <Link to={product.id} className={cx('wrapper')}>
             <div className={cx('img-wrapper')}>
                 <img src={img} alt={product.name} className={cx('img')} onError={handleError} />
                 <div className={cx('rate')}>
@@ -51,7 +51,7 @@ function Product({ product }) {
                 </div>
             </div>
             {(product.rate > 4 || pathname === '/order/best-foods') && <div className={cx('label')}>Favourite</div>}
-        </div>
+        </Link>
     );
 }
 

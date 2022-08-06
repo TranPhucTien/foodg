@@ -27,6 +27,7 @@ function Button({
     to,
     href,
     primary = false,
+    secondary = false,
     outline = false,
     small = false,
     large = false,
@@ -34,6 +35,8 @@ function Button({
     disabled = false,
     rounded = false,
     navLink = false,
+    circle = false,
+    fullWidth = false,
     leftIcon,
     rightIcon,
     children,
@@ -71,12 +74,15 @@ function Button({
     const classes = cx('wrapper', {
         [className]: className,
         primary,
+        secondary,
         outline,
         small,
         large,
         text,
         disabled,
         rounded,
+        circle,
+        fullWidth,
     });
 
     return (

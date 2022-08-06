@@ -83,7 +83,7 @@ function ProductSort({ currentSort, currentOrder, onChange }) {
                 <div className={cx('drop')} onClick={() => setShowResult(true)}>
                     <div className={cx('drop-current')}>
                         <span>{result.value}</span>
-                        <ExpandMore />
+                        <ExpandMore sx={{fontSize: '2rem'}} />
                     </div>
                 </div>
             </HeadlessTippy>

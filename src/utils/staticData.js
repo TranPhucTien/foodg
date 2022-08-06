@@ -4,7 +4,18 @@ import slider1 from '../assets/images/Home/banner-st.jpg';
 import {
     ArrowOne,
     ArrowSecond,
-    ArrowThree, ProductFour, ProductOne, ProductThree, ProductTwo, ReviewOne, ReviewThree, ReviewTwo, StepFour, StepOne, StepThree, StepTwo
+    ArrowThree,
+    ProductFour,
+    ProductOne,
+    ProductThree,
+    ProductTwo,
+    ReviewOne,
+    ReviewThree,
+    ReviewTwo,
+    StepFour,
+    StepOne,
+    StepThree,
+    StepTwo,
 } from './homeImages';
 
 import { Beef, Burger, Chicken, Coffee, Dinner, Juice, Lunch, Pork, Tea } from './homeSvgs';
@@ -232,10 +243,28 @@ const homeAnalysisData = [
 ];
 
 // detail
+const detailOptions = [
+    {
+        content: 'Buy S size get 15 percent off',
+        percentOff: 15,
+        size: 'S',
+    },
+    {
+        content: 'Buy M size get 25 percent off',
+        percentOff: 25,
+        size: 'M',
+    },
+    {
+        content: 'Buy L size get 50 percent off',
+        percentOff: 50,
+        size: 'L',
+    },
+];
+
 const detailTableData = [
     {
         title: null,
-        description: '28 cm size',
+        description: 'Information',
         ingredients: 'Ingredients',
     },
     {
@@ -279,4 +308,5 @@ export {
     homeProductsData,
     homeAnalysisData,
     detailTableData,
+    detailOptions,
 };
