@@ -1,4 +1,5 @@
 import { Pagination } from '@mui/material';
+import { useQuery } from '@tanstack/react-query';
 import classNames from 'classnames/bind';
 import queryString from 'query-string';
 import { useEffect, useMemo, useRef, useState } from 'react';
@@ -34,33 +35,36 @@ function ListPage() {
         };
     }, [location.search]);
 
-    const [productList, setProductList] = useState([]);
     const [pagination, setPagination] = useState({
         limit: 12,
         total: 10,
         page: 1,
     });
-    const [loading, setLoading] = useState(false);
     const [searchLoading, setSearchLoading] = useState(false);
 
     const [type, setType] = useState(GET_CURRENT_TYPE() || FIRST_SHOW_ORDER);
 
-    useEffect(() => {
-        (async () => {
-            try {
-                setLoading(true)
-                setSearchLoading(true);
-                const { data, pagination } = await productApi.getAll(type, queryParams);
-                setProductList(data.data);
-                setPagination(pagination);
-            } catch (error) {
-                console.log('Failed to fetch product list');
-            }
-            
+    const { data, isLoading } = useQuery(
+        ['list-product-pagination', queryParams, type],
+        async () => {
+            setSearchLoading(true);
+            const result = await productApi.getAll(type, queryParams);
             setSearchLoading(false);
-            setLoading(false);
-        })();
-    }, [queryParams, type]);
+            return result;
+        },
+        {
+            staleTime: 50000,
+            keepPreviousData: true,
+        },
+    );
+    const listProduct = data ? data.data.data : [];
+    const testPagination = data ? data.pagination : 1;
+
+    useEffect(() => {
+        setPagination(testPagination);
+    }, [testPagination]);
+
+    const paginationCount = pagination.total && pagination.limit ? Math.ceil(pagination.total / pagination.limit) : 1;
 
     const handlePageChange = (e, page) => {
         listPageRef.current.scrollIntoView({ behavior: 'smooth', block: 'start' });
@@ -133,19 +137,19 @@ function ListPage() {
                                 />
                             </div>
                         </div>
-                        {loading ? (
+                        {isLoading ? (
                             <SkeletonProductList />
-                        ) : productList.length > 0 ? (
-                            <ProductList data={productList} />
+                        ) : listProduct.length > 0 ? (
+                            <ProductList data={listProduct} />
                         ) : (
                             <img className={cx('not-found')} src={notFound} alt="not-found" />
                         )}
 
-                        {productList.length > 0 && (
+                        {listProduct.length > 0 && (
                             <div className={cx('pagination')}>
                                 <Pagination
-                                    count={Math.ceil(pagination.total / pagination.limit)}
-                                    page={pagination.page}
+                                    count={paginationCount}
+                                    page={pagination.page ? pagination.page : 1}
                                     shape="rounded"
                                     onChange={handlePageChange}
                                     size="large"

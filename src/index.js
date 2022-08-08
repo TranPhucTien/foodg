@@ -5,14 +5,19 @@ import '~/assets/styles/grid.scss';
 import store from '~/app';
 import GlobalStyles from './components/GlobalStyles';
 import reportWebVitals from './reportWebVitals';
+import { QueryClientProvider, QueryClient } from '@tanstack/react-query';
+
+const queryClient = new QueryClient();
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
     // <React.StrictMode>
     <GlobalStyles>
-        <Provider store={store}>
-            <App />
-        </Provider>
+        <QueryClientProvider client={queryClient}>
+            <Provider store={store}>
+                <App />
+            </Provider>
+        </QueryClientProvider>
     </GlobalStyles>,
     // </React.StrictMode>,
 );
