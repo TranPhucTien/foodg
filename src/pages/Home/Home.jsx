@@ -1,3 +1,4 @@
+import { useEffect } from 'react';
 import 'swiper/css';
 import 'swiper/css/pagination';
 import Analysis from './components/Analysis';
@@ -12,6 +13,10 @@ import Work from './components/Work';
 Home.propTypes = {};
 
 function Home(props) {
+    useEffect(() => {
+        window.scrollTo(0, 0);
+    }, []);
+
     return (
         <>
             <Banner />

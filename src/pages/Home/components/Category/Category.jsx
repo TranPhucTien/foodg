@@ -65,10 +65,10 @@ function Category(props) {
                             ))}
                         </Swiper>
                         <Button className={classNames(styles['prev-btn'], 'home-category-prev-btn')}>
-                            <DoubleArrow style={{ transform: 'rotate(180deg)' }} />
+                            <DoubleArrow sx={{ transform: 'rotate(180deg)', display: 'block' }} />
                         </Button>
                         <Button className={classNames(styles['next-btn'], 'home-category-next-btn')}>
-                            <DoubleArrow />
+                            <DoubleArrow sx={{display: 'block'}} />
                         </Button>
                     </div>
                 </div>

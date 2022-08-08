@@ -1,9 +1,8 @@
 import { FavoriteBorder, Room, ShoppingCartOutlined, Star } from '@mui/icons-material';
 import classNames from 'classnames/bind';
 import PropTypes from 'prop-types';
-import { useState } from 'react';
 import { Link, useLocation } from 'react-router-dom';
-import imageError from '~/assets/images/image-error.png';
+import Img from '~/components/Img';
 import styles from './Product.module.scss';
 
 const cx = classNames.bind(styles);
@@ -13,17 +12,12 @@ Product.propTypes = {
 };
 
 function Product({ product }) {
-    const [img, setImg] = useState(product.img);
     const { pathname } = useLocation();
-
-    const handleError = () => {
-        setImg(imageError);
-    };
 
     return (
         <Link to={product.id} className={cx('wrapper')}>
             <div className={cx('img-wrapper')}>
-                <img src={img} alt={product.name} className={cx('img')} onError={handleError} />
+                <Img src={product.img} alt={product.name} className={cx('img')} />
                 <div className={cx('rate')}>
                     <Star />
                     <span>{product.rate}</span>

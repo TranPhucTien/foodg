@@ -15,7 +15,7 @@ QuantityField.propTypes = {
 };
 
 function QuantityField(props) {
-    const { form, name, disabled } = props;
+    const { form, name, disabled, onQuantityChange } = props;
     const { control, setValue } = form;
 
     return (
@@ -25,7 +25,7 @@ function QuantityField(props) {
             fullWidth
             render={({ field: { onChange, onBlur, value, name }, fieldState: { error } }) => {
                 return (
-                    <div className={cx('wrapper')}>
+                    <div className={cx('wrapper')} onChange={onQuantityChange}>
                         <div className={cx('detail-btn-handle')}>
                             <Button
                                 type="button"

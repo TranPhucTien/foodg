@@ -28,6 +28,8 @@
 }
 
 .cart {
+    --header-height: 70px;
+
     position: fixed;
     right: 0;
     top: 0;
@@ -36,13 +38,13 @@
     background-color: #fff;
     box-shadow: -2px 0 8px rgb(0 0 0 / 15%);
     transform: translateX(100%);
-    transition: all 0.2s linear;
+    transition: transform 0.25s cubic-bezier(0.7, 0.3, 0.1, 1), -webkit-transform 0.3s cubic-bezier(0.7, 0.3, 0.1, 1);
 
     &-header {
         display: flex;
         align-items: center;
         padding: 0 24px;
-        height: 70px;
+        height: var(--header-height);
         border-bottom: 1px solid #f0efef;
     }
 
@@ -53,6 +55,14 @@
         padding: 24px;
         background: #fff;
         box-shadow: 0 -2px 6px 0 rgb(28 28 28 / 6%);
+    }
+
+    &-empty {
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        height: calc(100% - var(--header-height));
     }
 }
 
@@ -84,10 +94,17 @@
 .cart {
     &-list {
         padding: 16px 24px;
+        overflow-y: auto;
+        height: 100%;
+        overscroll-behavior: contain;
     }
     &-item {
         display: flex;
         align-items: center;
+
+        &:last-child {
+            margin-bottom: 300px;
+        }
     }
     &-item + &-item {
         margin-top: 20px;
@@ -118,9 +135,21 @@
         color: var(--primary);
         font-size: 1.6rem;
         font-weight: 500;
+        margin: 6px 0;
     }
     &-actions {
         display: flex;
+    }
+    &-quantity {
+        display: flex;
+        align-items: center;
+        height: 30px;
+        padding: 6px 30px;
+        margin: 0 8px;
+
+        border: 1px solid #ccc;
+        border-radius: 4px;
+        cursor: default;
     }
     &-icon {
         background-color: transparent;
@@ -167,5 +196,24 @@
         &:hover {
             opacity: 0.8;
         }
+    }
+}
+
+.empty {
+    &-image {
+        width: 50%;
+    }
+    &-title {
+        font-weight: 500;
+        font-size: 24px;
+        margin-top: 24px;
+    }
+    &-subs {
+        color: #9a9a9a;
+        margin-top: 8px;
+    }
+    &-close {
+        margin-top: 8px;
+        color: #00a5cf;
     }
 }

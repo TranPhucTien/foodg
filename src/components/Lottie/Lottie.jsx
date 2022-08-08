@@ -2,6 +2,7 @@ import lottie from 'lottie-web';
 import { useEffect, useRef } from 'react';
 
 import shipper from '~/assets/lottie/shipper';
+import emptyCart from '~/assets/lottie/empty_cart3.json'
 
 // const config = {
 //     renderer: 'svg',
@@ -33,4 +34,21 @@ function ShipperLottie() {
     return <div ref={anime}></div>;
 }
 
-export { ShipperLottie };
+function EmptyCartLottie() {
+    const anime = useRef(null);
+
+    useEffect(() => {
+        lottie.loadAnimation({
+            ...configLoop,
+            container: anime.current,
+            animationData: emptyCart,
+            name: 'emptyCart',
+        });
+
+        return () => lottie.stop();
+    }, []);
+
+    return <div ref={anime}></div>;
+}
+
+export { ShipperLottie, EmptyCartLottie };

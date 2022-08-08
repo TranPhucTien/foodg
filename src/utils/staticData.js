@@ -1,3 +1,4 @@
+import { SALE_OFF_SIZE_L } from '~/constants';
 import slider2 from '../assets/images/Home/banner-nd.jpg';
 import slider3 from '../assets/images/Home/banner-rd.jpg';
 import slider1 from '../assets/images/Home/banner-st.jpg';
@@ -15,7 +16,7 @@ import {
     StepFour,
     StepOne,
     StepThree,
-    StepTwo,
+    StepTwo
 } from './homeImages';
 
 import { Beef, Burger, Chicken, Coffee, Dinner, Juice, Lunch, Pork, Tea } from './homeSvgs';
@@ -245,17 +246,17 @@ const homeAnalysisData = [
 // detail
 const detailOptions = [
     {
-        content: 'Buy S size get 15 percent off',
+        content: `Buy S size`,
         percentOff: 15,
         size: 'S',
     },
     {
-        content: 'Buy M size get 25 percent off',
+        content: 'Buy M size',
         percentOff: 25,
         size: 'M',
     },
     {
-        content: 'Buy L size get 50 percent off',
+        content: `Buy L size get ${SALE_OFF_SIZE_L} dollar off`,
         percentOff: 50,
         size: 'L',
     },

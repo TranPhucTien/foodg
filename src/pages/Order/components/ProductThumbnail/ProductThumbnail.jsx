@@ -1,15 +1,10 @@
-import React, { useState } from 'react';
-import PropTypes from 'prop-types';
 import classNames from 'classnames/bind';
+import PropTypes from 'prop-types';
+import { useState } from 'react';
 import { SideBySideMagnifier } from 'react-image-magnifiers';
-import styles from './ProductThumbnail.module.scss';
 import imageError from '~/assets/images/image-error.png';
-
-// lazy load img js
-import { LazyLoadImage } from 'react-lazy-load-image-component';
-
-// lazy load img css
-import 'react-lazy-load-image-component/src/effects/blur.css';
+import styles from './ProductThumbnail.module.scss';
+import Img from '~/components/Img';
 
 const cx = classNames.bind(styles);
 
@@ -40,18 +35,16 @@ function ProductThumbnail({ product }) {
                 </div>
                 <div className={cx('image-list')}>
                     <div onClick={() => setLast(false)} className={cx('image-wrapper', { last })}>
-                        <img
-                            src={img}
+                        <Img
+                            src={product.img}
                             alt={product.name}
-                            onError={handleError}
                             className={cx('image')}
                         />
                     </div>
                     <div onClick={() => setLast(true)} className={cx('image-wrapper', { last: !last })}>
-                        <img
-                            src={img}
+                        <Img
+                            src={product.img}
                             alt={product.name}
-                            onError={handleError}
                             className={cx('image')}
                         />
                     </div>

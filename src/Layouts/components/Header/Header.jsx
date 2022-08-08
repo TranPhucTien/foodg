@@ -9,7 +9,6 @@ import Button from '~/components/Button';
 import { showCart } from '~/components/Cart/CartSlice';
 import { cartItemsCountSelector } from '~/components/Cart/selectors';
 import config from '~/config';
-import { FIRST_SHOW_ORDER } from '~/constants';
 import styles from './Header.module.scss';
 
 const cx = classNames.bind(styles);

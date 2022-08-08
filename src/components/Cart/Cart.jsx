@@ -1,10 +1,12 @@
 import { Add, Close, DeleteOutline, Remove } from '@mui/icons-material';
-import { OutlinedInput } from '@mui/material';
 import classNames from 'classnames/bind';
 import { useDispatch, useSelector } from 'react-redux';
+import { PRICE_BY_SIZE } from '~/constants';
 import Button from '../Button';
+import Img from '../Img';
+import { EmptyCartLottie } from '../Lottie';
 import styles from './Cart.module.scss';
-import { hideCart, removeFromCart } from './CartSlice';
+import { decreaseItem, hideCart, increaseItem, removeFromCart } from './CartSlice';
 import { cartTotalSelector } from './selectors';
 
 const cx = classNames.bind(styles);
@@ -21,8 +23,16 @@ function Cart(props) {
         dispatch(hideCart());
     };
 
-    const handleRemoveItem = (id) => {
-        dispatch(removeFromCart(id))
+    const handleRemoveItem = ({ id, size }) => {
+        dispatch(removeFromCart({ id, size }));
+    };
+
+    const handleIncreaseItem = (product) => {
+        dispatch(increaseItem(product));
+    };
+
+    const handleDecreaseItem = (product) => {
+        dispatch(decreaseItem(product));
     };
 
     return (
@@ -39,58 +49,85 @@ function Cart(props) {
                     </div>
                 </div>
 
-                <div className={cx('cart-list')}>
-                    {cartList.map(({ id, product, quantity, size }) => (
-                        <div key={id} className={cx('cart-item')}>
-                            <div className={cx('item-img-wrapper')}>
-                                <img src={product.img} alt={product.name} className={cx('item-img')} />
-                            </div>
-                            <div className={cx('item-content')}>
-                                <span className={cx('item-name')}>
-                                    ({size}) {product.name}
-                                </span>
-                                <span className={cx('item-price')}>{product.price}</span>
-                                <div className={cx('item-actions')}>
-                                    <Button type="button" circle secondary className={cx('detail-btn-inc')}>
-                                        <Remove sx={{ display: 'flex', alignItems: 'center' }} />
-                                    </Button>
+                {cartList.length > 0 ? (
+                    <>
+                        <div className={cx('cart-list')}>
+                            {cartList.map(({ id, product, quantity, size }) => {
+                                const priceBySize = PRICE_BY_SIZE({ size, price: product.price });
+                                return (
+                                    <div key={`${size}-${id}`} className={cx('cart-item')}>
+                                        <div className={cx('item-img-wrapper')}>
+                                            <Img src={product.img} alt={product.name} className={cx('item-img')} />
+                                        </div>
+                                        <div className={cx('item-content')}>
+                                            <span className={cx('item-name')}>
+                                                ({size}) {product.name}
+                                            </span>
+                                            <span className={cx('item-price')}>{priceBySize}</span>
+                                            <div className={cx('item-actions')}>
+                                                <Button
+                                                    small
+                                                    type="button"
+                                                    secondary
+                                                    className={cx('detail-btn-inc')}
+                                                    onClick={() => handleDecreaseItem({ product, size })}
+                                                >
+                                                    <Remove sx={{ display: 'flex', alignItems: 'center' }} />
+                                                </Button>
 
-                                    <OutlinedInput
-                                        type="number"
-                                        sx={{
-                                            margin: '0 1.2rem',
-                                            fontSize: '1.4rem',
-                                            maxWidth: '7rem',
-                                            height: '20px',
-                                        }}
-                                        size="small"
-                                    />
+                                                <div className={cx('item-quantity')}>{quantity}</div>
 
-                                    <Button type="button" circle secondary className={cx('detail-btn-dec')}>
-                                        <Add sx={{ display: 'flex', alignItems: 'center', justifyContent: 'center' }} />
-                                    </Button>
-                                </div>
+                                                <Button
+                                                    small
+                                                    type="button"
+                                                    secondary
+                                                    className={cx('detail-btn-dec')}
+                                                    onClick={() => handleIncreaseItem({ product, size })}
+                                                >
+                                                    <Add
+                                                        sx={{
+                                                            display: 'flex',
+                                                            alignItems: 'center',
+                                                            justifyContent: 'center',
+                                                        }}
+                                                    />
+                                                </Button>
+                                            </div>
+                                        </div>
+                                        <button
+                                            type="button"
+                                            className={cx('item-icon')}
+                                            onClick={() => {
+                                                handleRemoveItem({ id, size });
+                                            }}
+                                        >
+                                            <DeleteOutline sx={{ fontSize: '24px', color: '#676767' }} />
+                                        </button>
+                                    </div>
+                                );
+                            })}
+                        </div>
+
+                        <div className={cx('cart-footer')}>
+                            <div className={cx('footer-content')}>
+                                <span className={cx('footer-title')}>Subtotal</span>
+                                <span className={cx('footer-total')}>${cartTotal}</span>
                             </div>
-                            <button
-                                type="button"
-                                className={cx('item-icon')}
-                                onClick={() => {
-                                    handleRemoveItem(id);
-                                }}
-                            >
-                                <DeleteOutline sx={{ fontSize: '24px', color: '#676767' }} />
+                            <button type="submit" className={cx('footer-btn')}>
+                                Checkout
                             </button>
                         </div>
-                    ))}
-                </div>
-
-                <div className={cx('cart-footer')}>
-                    <div className={cx('footer-content')}>
-                        <span className={cx('footer-title')}>Total</span>
-                        <span className={cx('footer-total')}>${cartTotal}</span>
+                    </>
+                ) : (
+                    <div className={cx('cart-empty')}>
+                        <div className={cx('empty-image')}>
+                            <EmptyCartLottie />
+                        </div>
+                        <span className={cx('empty-title')}>Start Grabbing Food!</span>
+                        <span className={cx('empty-subs')}>Add items to your basket and place order here.</span>
+                        <Button text className={cx('empty-close')} onClick={handleCloseCart}>Continue browsing</Button>
                     </div>
-                    <button className={cx('footer-btn')}>Checkout</button>
-                </div>
+                )}
             </div>
         </section>
     );

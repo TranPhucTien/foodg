@@ -18,7 +18,7 @@ function ProductList({ data = [] }) {
                 const key = product.id + Math.random();
 
                 return (
-                    <div className={cx('col', 'l-3', 'm-4', 'c-12')} key={key}>
+                    <div className={cx('col', 'l-3', 'm-4', 'c-12', 'wrapper')} key={key}>
                         <Product product={product} />
                     </div>
                 );

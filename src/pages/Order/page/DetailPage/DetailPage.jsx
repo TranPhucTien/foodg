@@ -4,10 +4,11 @@ import { useDispatch } from 'react-redux';
 import { useParams } from 'react-router-dom';
 import Button from '~/components/Button';
 import { addToCart } from '~/components/Cart/CartSlice';
-import { GET_CURRENT_TYPE } from '~/constants';
+import { GET_CURRENT_TYPE, PRICE_BY_SIZE } from '~/constants';
 import { detailTableData } from '~/utils/staticData';
 import AddToCartForm from '../../components/AddToCartForm';
 import ProductInfo from '../../components/ProductInfo';
+import ProductRelative from '../../components/ProductRelative';
 import ProductThumbnail from '../../components/ProductThumbnail';
 import Service from '../../components/Service';
 import useProductDetail from '../../hooks/useProductDetail';
@@ -30,24 +31,9 @@ function DetailPage(props) {
         return <h2>loading...</h2>;
     }
 
-    const handleAddToCartChange = (size) => {
-        switch (size) {
-            case 'S':
-                setPrice(product.price * 0.7);
-                break;
-
-            case 'M':
-                setPrice(product.price);
-                break;
-
-            case 'L':
-                setPrice(product.price * 1.5);
-                break;
-
-            default:
-                setPrice(product.price);
-                break;
-        }
+    const handleSizeChange = (size) => {
+        const price = PRICE_BY_SIZE({ size, price: product.price });
+        setPrice(price);
     };
 
     const handleAddToCartSubmit = ({ quantity, size }) => {
@@ -69,7 +55,7 @@ function DetailPage(props) {
                     </div>
                     <div className="col l-6">
                         <ProductInfo product={product} type={type} priceSize={price} />
-                        <AddToCartForm onSubmit={handleAddToCartSubmit} onChange={handleAddToCartChange} />
+                        <AddToCartForm onSubmit={handleAddToCartSubmit} onChange={handleSizeChange} />
                         <Service />
                     </div>
                 </div>
@@ -117,6 +103,9 @@ function DetailPage(props) {
                             </table>
                         </div>
                     </div>
+                </div>
+                <div className={cx('row', 'relative')}>
+                    <ProductRelative />
                 </div>
             </div>
         </section>

@@ -1,15 +1,16 @@
-import React, { useState } from 'react';
-import PropTypes from 'prop-types';
-import classNames from 'classnames/bind';
-import styles from './AddToCartForm.module.scss';
-import { detailOptions } from '~/utils/staticData';
-import Checkbox from '../Checkbox';
 import { yupResolver } from '@hookform/resolvers/yup';
+import { AddShoppingCartOutlined, FavoriteBorder } from '@mui/icons-material';
+import classNames from 'classnames/bind';
+import PropTypes from 'prop-types';
+import { useState } from 'react';
 import { useForm } from 'react-hook-form';
 import * as yup from 'yup';
 import Button from '~/components/Button';
-import { Add, AddShoppingCartOutlined, FavoriteBorder, Remove } from '@mui/icons-material';
 import QuantityField from '~/components/formControl/QuantityField/QuantityField';
+import { maximumItemQuantity, minimumItemQuantity } from '~/constants';
+import { detailOptions } from '~/utils/staticData';
+import Checkbox from '../Checkbox';
+import styles from './AddToCartForm.module.scss';
 
 const cx = classNames.bind(styles);
 
@@ -24,8 +25,8 @@ function AddToCartForm({ onSubmit = null, onChange = null }) {
         quantity: yup
             .number()
             .required('Please enter quantity')
-            .min(1, 'Minimum value is 1')
-            .max(20, 'Maximum value is 20')
+            .min(minimumItemQuantity, `Minimum value is ${minimumItemQuantity}`)
+            .max(maximumItemQuantity, `Maximum value is ${maximumItemQuantity}`)
             .typeError('Please enter a number'),
     });
 
