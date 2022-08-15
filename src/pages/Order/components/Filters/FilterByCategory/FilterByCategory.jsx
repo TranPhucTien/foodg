@@ -30,7 +30,7 @@ function FilterByCategory({ onChange }) {
 
     return (
         <div className={cx('wrapper')}>
-            <h3 className='filter-title'>Category</h3>
+            <h3 className="filter-title">Category</h3>
             <ul className={cx('list')}>
                 {typeOptions.map((option) => (
                     <li

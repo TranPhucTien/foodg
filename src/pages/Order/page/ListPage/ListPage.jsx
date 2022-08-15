@@ -6,6 +6,7 @@ import { useEffect, useMemo, useRef, useState } from 'react';
 import { useLocation, useNavigate } from 'react-router-dom';
 import productApi from '~/api/productApi';
 import notFound from '~/assets/svgs/NotFound/404.svg';
+import config from '~/config';
 import { FIRST_SHOW_ORDER, GET_CURRENT_TYPE } from '~/constants';
 import ProductSort from '../../components/Filters/ProductSort';
 import ProductFilters from '../../components/ProductFilter';
@@ -44,8 +45,13 @@ function ListPage() {
 
     const [type, setType] = useState(GET_CURRENT_TYPE() || FIRST_SHOW_ORDER);
 
+    const handleFiltersChange = (newType) => {
+        setType(newType);
+        navigate({ pathname: `${config.routes.order}/${newType}` });
+    };
+
     const { data, isLoading } = useQuery(
-        ['list-product-pagination', queryParams, type],
+        ['list-product', queryParams, type],
         async () => {
             setSearchLoading(true);
             const result = await productApi.getAll(type, queryParams);
@@ -58,13 +64,12 @@ function ListPage() {
         },
     );
     const listProduct = data ? data.data.data : [];
-    const testPagination = data ? data.pagination : 1;
 
     useEffect(() => {
-        setPagination(testPagination);
-    }, [testPagination]);
-
-    const paginationCount = pagination.total && pagination.limit ? Math.ceil(pagination.total / pagination.limit) : 1;
+        if (isLoading === false && data) {
+            setPagination(data.pagination);
+        }
+    }, [isLoading, data]);
 
     const handlePageChange = (e, page) => {
         listPageRef.current.scrollIntoView({ behavior: 'smooth', block: 'start' });
@@ -93,11 +98,6 @@ function ListPage() {
         });
     };
 
-    const handleFiltersChange = (newType) => {
-        setType(newType);
-        navigate({ pathname: `/order/${newType}` });
-    };
-
     const handleSearchChange = (searchValue) => {
         listPageRef.current.scrollIntoView({ behavior: 'smooth', block: 'start' });
 
@@ -117,7 +117,7 @@ function ListPage() {
             <div className={cx('container')}>
                 <div className={cx('row')}>
                     <div className={cx('col', 'l-2', 'm-2', 'c-0')}>
-                        <ProductFilters type={type} filters={queryParams} onChange={handleFiltersChange} />
+                        <ProductFilters onChange={handleFiltersChange} />
                     </div>
 
                     <div className={cx('col', 'l-10', 'm-10', 'c-12', 'product-list')}>
@@ -148,7 +148,7 @@ function ListPage() {
                         {listProduct.length > 0 && (
                             <div className={cx('pagination')}>
                                 <Pagination
-                                    count={paginationCount}
+                                    count={Math.ceil(pagination.total / pagination.limit)}
                                     page={pagination.page ? pagination.page : 1}
                                     shape="rounded"
                                     onChange={handlePageChange}

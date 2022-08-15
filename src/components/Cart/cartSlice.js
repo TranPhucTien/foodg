@@ -1,5 +1,6 @@
 import { toast } from 'react-toastify';
 import { maximumItemQuantity, minimumItemQuantity } from '~/constants';
+import StorageKeys from '~/constants/storage-keys';
 
 const { createSlice } = require('@reduxjs/toolkit');
 
@@ -8,7 +9,7 @@ const cartSlice = createSlice({
     initialState: {
         showMiniCart: false,
         showCart: false,
-        cartItems: localStorage.getItem('cartItems') ? JSON.parse(localStorage.getItem('cartItems')) : [],
+        cartItems: localStorage.getItem(StorageKeys.CART_ITEMS) ? JSON.parse(localStorage.getItem(StorageKeys.CART_ITEMS)) : [],
     },
     reducers: {
         showMiniCart(state) {
@@ -35,17 +36,17 @@ const cartSlice = createSlice({
                 const currentQuantity = state.cartItems[index].quantity;
                 if (currentQuantity <= maximumItemQuantity - newItem.quantity) {
                     state.cartItems[index].quantity += newItem.quantity;
-                    toast.info(`Increased "${newItem.product.name}" cart quantity`);
+                    toast.info(`Increased "(${newItem.size}) ${newItem.product.name}" cart quantity`);
                 } else {
                     toast.error(`Maximum value is ${maximumItemQuantity}`);
                 }
             } else {
                 // add to cart
-                state.cartItems.push(newItem);
-                toast.success(`Added "${newItem.product.name}" to cart`);
+                state.cartItems.unshift(newItem);
+                toast.success(`Added "(${newItem.size}) ${newItem.product.name}" to cart`);
             }
 
-            localStorage.setItem('cartItems', JSON.stringify(state.cartItems));
+            localStorage.setItem(StorageKeys.CART_ITEMS, JSON.stringify(state.cartItems));
         },
 
         setQuantity(state, action) {
@@ -62,7 +63,6 @@ const cartSlice = createSlice({
             const index = state.cartItems.findIndex((item) => {
                 return item.id === newItem.product.id && item.size === newItem.size;
             });
-            console.log('🚀 ~ file: CartSlice.js ~ line 63 ~ decreaseItem ~ index', index);
 
             if (state.cartItems[index].quantity > minimumItemQuantity) {
                 state.cartItems[index].quantity -= 1;
@@ -72,7 +72,7 @@ const cartSlice = createSlice({
                 );
             }
 
-            localStorage.setItem('cartItems', JSON.stringify(state.cartItems));
+            localStorage.setItem(StorageKeys.CART_ITEMS, JSON.stringify(state.cartItems));
         },
 
         increaseItem(state, action) {
@@ -87,7 +87,7 @@ const cartSlice = createSlice({
                 toast.error(`Maximum value is ${maximumItemQuantity}`);
             }
 
-            localStorage.setItem('cartItems', JSON.stringify(state.cartItems));
+            localStorage.setItem(StorageKeys.CART_ITEMS, JSON.stringify(state.cartItems));
         },
 
         removeFromCart(state, action) {
@@ -97,7 +97,7 @@ const cartSlice = createSlice({
                 }
                 return false;
             });
-            localStorage.setItem('cartItems', JSON.stringify(state.cartItems));
+            localStorage.setItem(StorageKeys.CART_ITEMS, JSON.stringify(state.cartItems));
         },
     },
 });

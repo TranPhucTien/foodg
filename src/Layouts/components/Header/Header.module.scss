@@ -35,13 +35,72 @@
 
     &-item {
         list-style-type: none;
+
+        & > *svg {
+            font-size: 24px;
+        }
     }
 }
 
 .actions {
     color: var(--white);
+    display: flex;
+    align-items: center;
 }
 
-.login-icon {
-    margin-left: 32px;
+.badge-icon {
+    &:hover {
+        color: var(--white);
+    }
+}
+
+.user {
+    &-name {
+        max-width: 200px;
+        overflow: hidden;
+        display: -webkit-box;
+        text-transform: capitalize;
+        text-overflow: ellipsis;
+        font-size: 16px;
+        -webkit-line-clamp: 1;
+        line-clamp: 2;
+        -webkit-box-orient: vertical;
+    }
+
+    &-avatar {
+        width: 32px;
+        border-radius: 4px;
+        margin-right: 8px;
+    }
+}
+
+.logout-icon {
+    background-color: transparent;
+    color: var(--white);
+    margin-left: 24px;
+    transition: color 0.25s linear;
+
+    &:hover {
+        color: var(--primary);
+    }
+
+    & > svg {
+        font-size: 32px;
+    }
+}
+
+.popper {
+    color: var(--black);
+
+    &:hover {
+        color: var(--black);
+    }
+}
+
+.modal-close {
+    position: absolute;
+    top: 12px;
+    right: 12px;
+    cursor: pointer;
+    z-index: 99;
 }

@@ -1,6 +1,8 @@
 import { Star, StarBorder } from '@mui/icons-material';
 import classNames from 'classnames/bind';
 import PropTypes from 'prop-types';
+import { useState } from 'react';
+import { useEffect } from 'react';
 import styles from './ProductInfo.module.scss';
 
 const cx = classNames.bind(styles);
@@ -11,7 +13,7 @@ ProductInfo.propTypes = {
     type: PropTypes.string,
 };
 
-function ProductInfo({ priceSize, product = {}, type = '' }) {
+function ProductInfo({ priceSize = 0, product = {}, type = '' }) {
     const { name, dsc, price, rate, country } = product;
 
     return (

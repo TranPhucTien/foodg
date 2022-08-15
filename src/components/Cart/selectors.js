@@ -10,23 +10,51 @@ export const cartItemsCountSelector = createSelector(cartItemsSelector, (cartIte
 
 // Calculate total cart
 export const cartTotalSelector = createSelector(cartItemsSelector, (cartItems) =>
-    cartItems.reduce((total, item) => {
-        let priceItem = item.product.price;
-        switch (item.size) {
-            case 'S':
-                priceItem = item.product.price * PRICE_SIZE_S - SALE_OFF_SIZE_S;
-                break;
+    cartItems
+        .reduce((total, item) => {
+            let priceItem = item.product.price;
+            switch (item.size) {
+                case 'S':
+                    priceItem = item.product.price * PRICE_SIZE_S - SALE_OFF_SIZE_S;
+                    break;
 
-            case 'M':
-                priceItem = item.product.price * 1 - SALE_OFF_SIZE_M;
-                break;
+                case 'M':
+                    priceItem = item.product.price * 1 - SALE_OFF_SIZE_M;
+                    break;
 
-            case 'L':
-                priceItem = item.product.price * PRICE_SIZE_L - SALE_OFF_SIZE_L;
-                break;
-            default:
-                priceItem = item.product.price;
-        }
-        return total + priceItem * item.quantity;
-    }, 0).toFixed(2),
+                case 'L':
+                    priceItem = item.product.price * PRICE_SIZE_L - SALE_OFF_SIZE_L;
+                    break;
+                default:
+                    priceItem = item.product.price;
+            }
+            return total + priceItem * item.quantity;
+        }, 0)
+        .toFixed(2),
 );
+
+// Calculate discount
+export const totalDiscountSelector = createSelector(cartItemsSelector, (cartItems) => {
+    return cartItems
+        .reduce((totalDiscount, item) => {
+            let discount = 0;
+            switch (item.size) {
+                case 'S':
+                    discount = SALE_OFF_SIZE_S * item.quantity;
+                    break;
+
+                case 'M':
+                    discount = SALE_OFF_SIZE_M * item.quantity;
+                    break;
+
+                case 'L':
+                    discount = SALE_OFF_SIZE_L * item.quantity;
+                    break;
+                default:
+                    discount = 0;
+            }
+
+            return totalDiscount + discount;
+        }, 0)
+        .toFixed(2);
+});

@@ -1,9 +1,10 @@
 import classNames from 'classnames/bind';
-import { useState } from 'react';
+import queryString from 'query-string';
+import { useEffect, useState } from 'react';
 import { useDispatch } from 'react-redux';
-import { useParams } from 'react-router-dom';
+import { useLocation, useParams } from 'react-router-dom';
 import Button from '~/components/Button';
-import { addToCart } from '~/components/Cart/CartSlice';
+import { addToCart } from '~/components/Cart/cartSlice';
 import { GET_CURRENT_TYPE, PRICE_BY_SIZE } from '~/constants';
 import { detailTableData } from '~/utils/staticData';
 import AddToCartForm from '../../components/AddToCartForm';
@@ -16,25 +17,26 @@ import styles from './DetailPage.module.scss';
 
 const cx = classNames.bind(styles);
 
-DetailPage.propTypes = {};
-
-function DetailPage(props) {
+function DetailPage() {
     const { productId } = useParams();
     const type = GET_CURRENT_TYPE();
     const typeName = type.replace('-', ' ');
+    const location = useLocation();
 
     const { product, loading } = useProductDetail({ type, productId });
     const [price, setPrice] = useState(product.price);
     const dispatch = useDispatch();
 
-    if (loading) {
-        return <h2>loading...</h2>;
-    }
-
     const handleSizeChange = (size) => {
         const price = PRICE_BY_SIZE({ size, price: product.price });
         setPrice(price);
     };
+
+    useEffect(() => {
+        const params = queryString.parse(location.search);
+        const price = PRICE_BY_SIZE({ size: params._size, price: product.price });
+        setPrice(price);
+    }, [product, location.search]);
 
     const handleAddToCartSubmit = ({ quantity, size }) => {
         const action = addToCart({
@@ -42,9 +44,14 @@ function DetailPage(props) {
             product,
             quantity,
             size,
+            type,
         });
         dispatch(action);
     };
+
+    if (loading) {
+        return <h2>loading...</h2>;
+    }
 
     return (
         <section>

@@ -2,7 +2,11 @@ import lottie from 'lottie-web';
 import { useEffect, useRef } from 'react';
 
 import shipper from '~/assets/lottie/shipper';
-import emptyCart from '~/assets/lottie/empty_cart3.json'
+import emptyCart from '~/assets/lottie/empty_cart3.json';
+import emptyProduct from '~/assets/lottie/empty_cart5.json';
+import login from '~/assets/lottie/login.json';
+import successful from '~/assets/lottie/successful.json';
+import notFound from '~/assets/lottie/notFound3.json';
 
 // const config = {
 //     renderer: 'svg',
@@ -51,4 +55,73 @@ function EmptyCartLottie() {
     return <div ref={anime}></div>;
 }
 
-export { ShipperLottie, EmptyCartLottie };
+function LoginLottie() {
+    const anime = useRef(null);
+
+    useEffect(() => {
+        lottie.loadAnimation({
+            ...configLoop,
+            container: anime.current,
+            animationData: login,
+            name: 'login',
+        });
+
+        return () => lottie.stop();
+    }, []);
+
+    return <div ref={anime}></div>;
+}
+
+function EmptyProductLottie() {
+    const anime = useRef(null);
+
+    useEffect(() => {
+        lottie.loadAnimation({
+            ...configLoop,
+            container: anime.current,
+            animationData: emptyProduct,
+            name: 'emptyProduct',
+        });
+
+        return () => lottie.stop();
+    }, []);
+
+    return <div ref={anime}></div>;
+}
+
+function SuccessfulLottie() {
+    const anime = useRef(null);
+
+    useEffect(() => {
+        lottie.loadAnimation({
+            ...configLoop,
+            loop: false,
+            container: anime.current,
+            animationData: successful,
+            name: 'successful',
+        });
+
+        return () => lottie.stop();
+    }, []);
+
+    return <div ref={anime}></div>;
+}
+
+function NotFoundLottie() {
+    const anime = useRef(null);
+
+    useEffect(() => {
+        lottie.loadAnimation({
+            ...configLoop,
+            container: anime.current,
+            animationData: notFound,
+            name: 'notFound',
+        });
+
+        return () => lottie.stop();
+    }, []);
+
+    return <div ref={anime}></div>;
+}
+
+export { ShipperLottie, EmptyCartLottie, LoginLottie, EmptyProductLottie, SuccessfulLottie, NotFoundLottie };

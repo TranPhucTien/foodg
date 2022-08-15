@@ -1,6 +1,6 @@
 import classNames from 'classnames/bind';
 import PropTypes from 'prop-types';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { SideBySideMagnifier } from 'react-image-magnifiers';
 import imageError from '~/assets/images/image-error.png';
 import styles from './ProductThumbnail.module.scss';
@@ -15,6 +15,10 @@ ProductThumbnail.propTypes = {
 function ProductThumbnail({ product }) {
     const [img, setImg] = useState(product.img || '');
     const [last, setLast] = useState(false);
+
+    useEffect(() => {
+        setImg(product.img || '')
+    }, [product])
 
     const handleError = () => {
         setImg(imageError);

@@ -16,6 +16,7 @@ ProductSort.propTypes = {
 
 function ProductSort({ currentSort, currentOrder, onChange }) {
     const { pathname } = useLocation();
+    const [showResult, setShowResult] = useState(false);
     const [result, setResult] = useState({
         value: 'Sort',
         sort: currentSort,
@@ -38,10 +39,8 @@ function ProductSort({ currentSort, currentOrder, onChange }) {
                 }))
             }
         })
-    // eslint-disable-next-line react-hooks/exhaustive-deps
+        // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [])
-
-    const [showResult, setShowResult] = useState(false);
 
     const handleHideResult = () => {
         setShowResult(false);

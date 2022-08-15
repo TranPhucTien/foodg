@@ -1,24 +1,16 @@
 import PropTypes from 'prop-types';
-import classNames from 'classnames/bind';
+
+// styled component
 import styled from 'styled-components';
+
 import styles from './BackgroundIcon.module.scss';
+import classNames from 'classnames/bind';
 
 const cx = classNames.bind(styles);
 
-BackgroundIcon.propTypes = {
-    src: PropTypes.string,
-    width: PropTypes.string,
-    top: PropTypes.string,
-    right: PropTypes.string,
-    bottom: PropTypes.string,
-    left: PropTypes.string,
-    duration: PropTypes.string,
-    delay: PropTypes.string,
-    type: PropTypes.string,
-    zIndex: PropTypes.string,
-};
+function BackgroundIcon(props) {
+    const { src, width, top, right, bottom, left, type, duration, delay, zIndex } = props;
 
-function BackgroundIcon({ src, width, top, right, bottom, left, duration, delay, type, zIndex }) {
     return (
         <Img
             src={src}
@@ -31,7 +23,7 @@ function BackgroundIcon({ src, width, top, right, bottom, left, duration, delay,
             delay={delay}
             type={type}
             zIndex={zIndex}
-            className={cx('icon')}
+            className={cx("bg-icon")}
             alt="Background icon"
         />
     );
@@ -50,5 +42,18 @@ const Img = styled.img`
     animation-duration: ${(p) => p.duration}s;
     animation-delay: ${(p) => p.delay && p.delay + 's'};
 `;
+
+BackgroundIcon.propTypes = {
+    src: PropTypes.string,
+    width: PropTypes.string,
+    top: PropTypes.string,
+    right: PropTypes.string,
+    bottom: PropTypes.string,
+    left: PropTypes.string,
+    type: PropTypes.string,
+    duration: PropTypes.string,
+    delay: PropTypes.string,
+    zIndex: PropTypes.string,
+};
 
 export default BackgroundIcon;

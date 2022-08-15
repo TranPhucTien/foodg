@@ -1,0 +1,18 @@
+.wrapper {
+    display: flex;
+    flex-direction: column;
+    flex: 1;
+
+    & > *:first-child {
+        margin-bottom: 5px;
+    }
+    .error > * {
+        color: var(--primary) !important;
+    }
+}
+
+.error-text {
+    font-size: 12px;
+    line-height: 15px;
+    color: rgb(255, 76, 58);
+}

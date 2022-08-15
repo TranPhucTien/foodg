@@ -1,0 +1,72 @@
+.progress {
+    display: flex;
+    align-items: center;
+    margin-bottom: 50px;
+
+    &-item {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+    }
+
+    &-icon {
+        position: relative;
+        z-index: 10;
+
+        width: 5.5rem;
+        height: 5.5rem;
+        border-radius: 50%;
+
+        transition: all 0.1s linear 0.4s;
+
+        background-color: #bfbfbf;
+
+        svg {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+
+            font-size: 2.3rem;
+            transform: translate(-50%, -50%);
+
+            fill: var(--white);
+        }
+    }
+
+    &-title {
+        margin-top: 10px;
+        font-weight: bold;
+    }
+}
+
+.line {
+    position: relative;
+
+    height: 1rem;
+    width: 100%;
+    margin: -25px -5px 0;
+
+    background-color: #bfbfbf;
+
+    &:nth-of-type(1):before {
+        width: 100%;
+    }
+
+    &:before {
+        position: absolute;
+        top: 0;
+        left: 0;
+        content: '';
+
+        width: 0;
+        height: 100%;
+
+        background-color: var(--primary);
+
+        transition: all 0.45s linear;
+    }
+}
+
+.active {
+    background-color: var(--primary);
+}

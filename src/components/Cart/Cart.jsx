@@ -1,12 +1,15 @@
 import { Add, Close, DeleteOutline, Remove } from '@mui/icons-material';
 import classNames from 'classnames/bind';
 import { useDispatch, useSelector } from 'react-redux';
-import { PRICE_BY_SIZE } from '~/constants';
+import { Link, useLocation, useNavigate } from 'react-router-dom';
+import config from '~/config';
+import { FIRST_SHOW_ORDER, PRICE_BY_SIZE } from '~/constants';
+import { showDialogAuth } from '~/Layouts/components/Header/modeSlice';
 import Button from '../Button';
 import Img from '../Img';
 import { EmptyCartLottie } from '../Lottie';
 import styles from './Cart.module.scss';
-import { decreaseItem, hideCart, increaseItem, removeFromCart } from './CartSlice';
+import { decreaseItem, hideCart, increaseItem, removeFromCart } from './cartSlice';
 import { cartTotalSelector } from './selectors';
 
 const cx = classNames.bind(styles);
@@ -17,10 +20,30 @@ function Cart(props) {
     const cartTotal = useSelector(cartTotalSelector);
     const showCart = useSelector((state) => state.cart.showCart);
     const cartList = useSelector((state) => state.cart.cartItems);
+    const loggedInUser = useSelector((state) => state.user.current);
+    const isLoggedIn = !!loggedInUser.id;
+    const navigate = useNavigate();
+    const { pathname } = useLocation();
     const dispatch = useDispatch();
+
+    const handleToClickCheckout = () => {
+        if (!isLoggedIn) {
+            dispatch(showDialogAuth());
+            dispatch(hideCart());
+        } else {
+            dispatch(hideCart());
+        }
+    };
 
     const handleCloseCart = () => {
         dispatch(hideCart());
+    };
+
+    const handleClickContinue = () => {
+        dispatch(hideCart());
+        if (pathname.split('/')[1] !== config.routes.order) {
+            navigate({ pathname: `${config.routes.order}/${FIRST_SHOW_ORDER}` });
+        }
     };
 
     const handleRemoveItem = ({ id, size }) => {
@@ -52,7 +75,7 @@ function Cart(props) {
                 {cartList.length > 0 ? (
                     <>
                         <div className={cx('cart-list')}>
-                            {cartList.map(({ id, product, quantity, size }) => {
+                            {cartList.map(({ id, product, quantity, size, type }) => {
                                 const priceBySize = PRICE_BY_SIZE({ size, price: product.price });
                                 return (
                                     <div key={`${size}-${id}`} className={cx('cart-item')}>
@@ -60,9 +83,13 @@ function Cart(props) {
                                             <Img src={product.img} alt={product.name} className={cx('item-img')} />
                                         </div>
                                         <div className={cx('item-content')}>
-                                            <span className={cx('item-name')}>
+                                            <Link
+                                                to={`${config.routes.order}/${type}/${product.id}?_size=${size}`}
+                                                className={cx('item-name')}
+                                                onClick={handleCloseCart}
+                                            >
                                                 ({size}) {product.name}
-                                            </span>
+                                            </Link>
                                             <span className={cx('item-price')}>{priceBySize}</span>
                                             <div className={cx('item-actions')}>
                                                 <Button
@@ -110,12 +137,19 @@ function Cart(props) {
 
                         <div className={cx('cart-footer')}>
                             <div className={cx('footer-content')}>
-                                <span className={cx('footer-title')}>Subtotal</span>
+                                <span className={cx('footer-title')}>Total</span>
                                 <span className={cx('footer-total')}>${cartTotal}</span>
                             </div>
-                            <button type="submit" className={cx('footer-btn')}>
-                                Checkout
-                            </button>
+                            {isLoggedIn && (
+                                <Button to="/checkout" className={cx('footer-btn')} onClick={handleToClickCheckout}>
+                                    Checkout
+                                </Button>
+                            )}
+                            {!isLoggedIn && (
+                                <Button className={cx('footer-btn')} onClick={handleToClickCheckout}>
+                                    Log in to checkout
+                                </Button>
+                            )}
                         </div>
                     </>
                 ) : (
@@ -125,7 +159,9 @@ function Cart(props) {
                         </div>
                         <span className={cx('empty-title')}>Start Grabbing Food!</span>
                         <span className={cx('empty-subs')}>Add items to your basket and place order here.</span>
-                        <Button text className={cx('empty-close')} onClick={handleCloseCart}>Continue browsing</Button>
+                        <Button text className={cx('empty-close')} onClick={handleClickContinue}>
+                            Continue browsing
+                        </Button>
                     </div>
                 )}
             </div>

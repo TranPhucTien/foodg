@@ -106,6 +106,15 @@
     min-width: auto;
 }
 
+.gray {
+    background: rgba(22, 24, 35, 0.03);
+    color: var(--black);
+
+    &:hover {
+        color: var(--primary);
+    }
+}
+
 // size
 .small {
     // min-width: 88px;

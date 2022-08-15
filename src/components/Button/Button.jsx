@@ -9,6 +9,7 @@ Button.propTypes = {
     to: PropTypes.string,
     href: PropTypes.string,
     children: PropTypes.node.isRequired,
+    gray: PropTypes.bool,
     primary: PropTypes.bool,
     outline: PropTypes.bool,
     small: PropTypes.bool,
@@ -26,6 +27,7 @@ Button.propTypes = {
 function Button({
     to,
     href,
+    gray = false,
     primary = false,
     secondary = false,
     outline = false,
@@ -82,6 +84,7 @@ function Button({
         disabled,
         rounded,
         circle,
+        gray,
         fullWidth,
     });
 

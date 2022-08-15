@@ -11,6 +11,8 @@
     --white: #fff;
     --black: #000;
     --gray: rgba(0, 0, 0, 0.4);
+    --desc: rgba(22, 24, 35, 0.75);
+    --blue: #00a5cf;
 
     // Default layout
     --default-layout-header-height: 68px;
@@ -76,6 +78,10 @@ input[type='number'] {
     -moz-appearance: textfield;
 }
 
+button {
+    cursor: pointer;
+}
+
 button,
 input,
 [tabindex] {
@@ -127,6 +133,12 @@ a {
     margin-bottom: 10px;
     padding: 8px 0 8px 12px;
     border-bottom: 1px solid rgba(0, 0, 0, 0.15);
+}
+
+.tada {
+    &:hover {
+        animation: tada 0.5s;
+    }
 }
 
 // Custom active
@@ -236,5 +248,47 @@ body {
     }
     .tippy-content {
         padding: 8px 9px;
+    }
+}
+
+@keyframes tada {
+    0% {
+        transform: scale(1);
+    }
+    10%,
+    20% {
+        transform: scale(0.9) rotate(-3deg);
+    }
+    30%,
+    50%,
+    70%,
+    90% {
+        transform: scale(1.1) rotate(3deg);
+    }
+    40%,
+    60%,
+    80% {
+        transform: scale(1.1) rotate(-3deg);
+    }
+    100% {
+        transform: scale(1) rotate(0);
+    }
+}
+
+@keyframes float {
+    from {
+        transform: translateY(0);
+    }
+    to {
+        transform: translateY(-15px);
+    }
+}
+
+@keyframes scale {
+    from {
+        transform: scale(1);
+    }
+    to {
+        transform: scale(1.2);
     }
 }
