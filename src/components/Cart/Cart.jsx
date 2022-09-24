@@ -83,13 +83,15 @@ function Cart(props) {
                                             <Img src={product.img} alt={product.name} className={cx('item-img')} />
                                         </div>
                                         <div className={cx('item-content')}>
-                                            <Link
-                                                to={`${config.routes.order}/${type}/${product.id}?_size=${size}`}
+                                            <a
+                                                href={`${config.routes.order}/${type}/${product.id}?_size=${size}`}
+                                                target="_blank"
+                                                rel="noreferrer"
                                                 className={cx('item-name')}
                                                 onClick={handleCloseCart}
                                             >
                                                 ({size}) {product.name}
-                                            </Link>
+                                            </a>
                                             <span className={cx('item-price')}>{priceBySize}</span>
                                             <div className={cx('item-actions')}>
                                                 <Button

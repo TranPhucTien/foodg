@@ -2,17 +2,17 @@ import { yupResolver } from '@hookform/resolvers/yup';
 import { AddShoppingCartOutlined, FavoriteBorder } from '@mui/icons-material';
 import classNames from 'classnames/bind';
 import PropTypes from 'prop-types';
+import queryString from 'query-string';
 import { useEffect, useMemo, useState } from 'react';
 import { useForm } from 'react-hook-form';
+import { useLocation, useSearchParams } from 'react-router-dom';
 import * as yup from 'yup';
 import Button from '~/components/Button';
 import QuantityField from '~/components/formControl/QuantityField/QuantityField';
 import { maximumItemQuantity, minimumItemQuantity } from '~/constants';
 import { detailOptions } from '~/utils/staticData';
 import Checkbox from '../Checkbox';
-import queryString from 'query-string';
 import styles from './AddToCartForm.module.scss';
-import { useLocation, useNavigate } from 'react-router-dom';
 
 const cx = classNames.bind(styles);
 
@@ -22,8 +22,8 @@ AddToCartForm.propTypes = {
 };
 
 function AddToCartForm({ onSubmit = null, onChange = null }) {
-    const navigate = useNavigate();
     const location = useLocation();
+    const [searchParams, setSearchParams] = useSearchParams();
     const queryParams = useMemo(() => {
         const params = queryString.parse(location.search);
 
@@ -35,6 +35,42 @@ function AddToCartForm({ onSubmit = null, onChange = null }) {
 
     const [sizeValue, setSizeValue] = useState(queryParams._size);
 
+    const removeQueryParamsSize = () => {
+        const param = searchParams.get('_size');
+
+        if (param) {
+            // 👇️ delete each query param
+            searchParams.delete('_size');
+
+            // 👇️ update state after
+            setSearchParams(searchParams);
+        }
+    };
+
+    const isSizeValid = () => {
+        const param = searchParams.get('_size');
+
+        if (param) {
+            if (queryParams._size === 'S' || queryParams._size === 'M' || queryParams._size === 'L') {
+                return true;
+            } else {
+                return false;
+            }
+        } else {
+            return true;
+        }
+    };
+
+    useEffect(() => {
+        if (isSizeValid()) {
+            setSizeValue(queryParams._size);
+        } else {
+            removeQueryParamsSize();
+            setSizeValue('M');
+        }
+        // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, [queryParams]);
+
     const schema = yup.object().shape({
         quantity: yup
             .number()
@@ -43,10 +79,6 @@ function AddToCartForm({ onSubmit = null, onChange = null }) {
             .max(maximumItemQuantity, `Maximum value is ${maximumItemQuantity}`)
             .typeError('Please enter a number'),
     });
-
-    useEffect(() => {
-        setSizeValue(queryParams._size);
-    }, [queryParams]);
 
     const form = useForm({
         defaultValues: {
@@ -57,40 +89,26 @@ function AddToCartForm({ onSubmit = null, onChange = null }) {
         resolver: yupResolver(schema),
     });
 
-    const handleCheckboxChange = (e) => {
+    const handleSizeChange = (e) => {
         const name = e.target.name;
         const size = e.target.value;
         setSizeValue(size);
         form.setValue(name, size);
-    };
-
-    const handleSizeChange = (e) => {
-        const size = e.target.value;
-        
-        if (isNaN(Number(size))) {
-            const filters = {
-                ...queryParams,
-                _size: size,
-            };
-
-            navigate({
-                pathname: location.pathname,
-                search: queryString.stringify(filters),
-            });
-
-            if (onChange) onChange(size);
-        }
+        if (onChange) onChange(size);
+        removeQueryParamsSize();
     };
 
     const handleSubmit = async (values) => {
-        console.log('🚀 ~ file: AddToCartForm.jsx ~ line 84 ~ handleSubmit ~ values', values);
+        values.quantity = Number.parseInt(values.quantity);
+        console.log('🚀 ~ file: AddToCartForm.jsx ~ line 67 ~ handleSubmit ~ values', values);
+
         if (onSubmit) {
             await onSubmit(values);
         }
     };
 
     return (
-        <form onSubmit={form.handleSubmit(handleSubmit)} className={cx('form')} onChange={handleSizeChange}>
+        <form onSubmit={form.handleSubmit(handleSubmit)} className={cx('form')}>
             <div className={cx('form-title')}>Choose your options</div>
             {detailOptions.map((option) => (
                 <Checkbox
@@ -99,7 +117,7 @@ function AddToCartForm({ onSubmit = null, onChange = null }) {
                     content={option.content}
                     value={option.size}
                     name="size"
-                    onChange={(e) => handleCheckboxChange(e)}
+                    onChange={(e) => handleSizeChange(e)}
                 />
             ))}
 
