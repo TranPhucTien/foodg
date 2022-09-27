@@ -47,7 +47,7 @@ function ListPage() {
 
     const handleFiltersChange = (newType) => {
         setType(newType);
-        navigate({ pathname: `${config.routes.order}/${type}` });
+        navigate({ pathname: `${config.routes.order}/${newType}` });
     };
 
     const { data, isLoading } = useQuery(
