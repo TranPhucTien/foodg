@@ -41,3 +41,27 @@
 .animate {
     flex: 3;
 }
+
+// mobile and tablet
+@media only screen and (max-width: 1023px) {
+    .content {
+        flex: 1;
+    }
+    .animate {
+        flex: 1;
+    }
+}
+
+// Mobile
+@media only screen and (max-width: 739px) {
+    .wrapper {
+        flex-direction: column;
+    }
+    .content {
+        margin-bottom: 24px;
+    }
+    .contact {
+        flex-wrap: wrap;
+        grid-row-gap: 20px;
+    }
+}

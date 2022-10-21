@@ -28,7 +28,7 @@ function Work(props) {
                                                 style={{
                                                     backgroundImage: `url(${arrow})`,
                                                 }}
-                                                className={cx('thumb-arrow')}
+                                                className={cx('thumb-arrow', 'hidden-lt-tablet')}
                                             ></div>
                                         </div>
                                     </div>

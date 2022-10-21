@@ -12,7 +12,7 @@ FilterByCategory.propTypes = {
     onChange: PropTypes.func,
 };
 
-function FilterByCategory({ onChange }) {
+function FilterByCategory({ onChange, setIsShowCategory }) {
     const [type, setType] = useState(FIRST_SHOW_ORDER);
     const params = useParams();
     const name = params.type;
@@ -23,6 +23,7 @@ function FilterByCategory({ onChange }) {
 
     const handleClickCategory = (option) => {
         setType(option.type);
+        setIsShowCategory(prev => !prev)
         if (onChange) {
             onChange(option.type);
         }

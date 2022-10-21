@@ -1,4 +1,4 @@
-import { Close, Home as HomeIcon, Logout, RestaurantMenu, ShoppingBag } from '@mui/icons-material';
+import { Close, Home as HomeIcon, Logout, Menu, RestaurantMenu, ShoppingBag } from '@mui/icons-material';
 import { Badge } from '@mui/material';
 import Dialog from '@mui/material/Dialog';
 import DialogContent from '@mui/material/DialogContent';
@@ -12,6 +12,7 @@ import 'tippy.js/themes/light.css';
 import images from '~/assets/images';
 import avatar from '~/assets/images/avatar_default.png';
 import Button from '~/components/Button';
+import MenuMobile from '~/components/Menu'
 import { showCart } from '~/components/Cart/cartSlice';
 import { cartItemsCountSelector } from '~/components/Cart/selectors';
 import config from '~/config';
@@ -32,17 +33,18 @@ function Header() {
     const mode = useSelector((state) => state.mode.mode);
     const fullName = useSelector((state) => state.user.current.fullName);
     const [background, setBackground] = useState(false);
+    const [isShowMenu, setIsShowMenu] = useState(false)
     const headerRef = useRef();
     const cartItemCount = useSelector(cartItemsCountSelector);
     const dispatch = useDispatch();
-    const isShowDialogAuth = useSelector(state => state.mode.isShowDialog)
+    const isShowDialogAuth = useSelector((state) => state.mode.isShowDialog);
 
     const handleClickLogin = () => {
         dispatch(showDialogAuth());
     };
-    
+
     const handleCloseAuth = () => {
-        dispatch(showLoginMode())
+        dispatch(showLoginMode());
         dispatch(hideDialogAuth());
     };
 
@@ -68,6 +70,10 @@ function Header() {
         };
     }
 
+    const handleClickMenu = () => {
+        setIsShowMenu(prev => !prev)
+    }
+
     const listenScrollEvent = () => {
         if (window.scrollY < 100) {
             return setBackground(false);
@@ -89,11 +95,15 @@ function Header() {
     return (
         <header className={cx('wrapper', { background })} ref={headerRef}>
             <div className={cx('inner', 'container')}>
+                <div className={cx('menu-icon', 'l-0')}>
+                    <Menu sx={{ fontSize: '32px' }} onClick={handleClickMenu} />
+                </div>
+                <MenuMobile isShow={isShowMenu} setIsShow={setIsShowMenu} />
                 <div className={cx('links')}>
                     <Link to={config.routes.home} className={cx('logo')}>
                         <img src={images.logo} alt="logo" />
                     </Link>
-                    <ul className={cx('links-list')}>
+                    <ul className={cx('hidden-lt-tablet', 'links-list')}>
                         <li className={cx('links-item')}>
                             <Button navLink to={config.routes.home} text leftIcon={<HomeIcon />}>
                                 Home
@@ -118,7 +128,7 @@ function Header() {
                     </ul>
                 </div>
                 <div className={cx('actions')}>
-                    <Button text className={cx('badge-icon')} color="inherit" onClick={handleClickCart}>
+                    <Button text className={cx('badge-icon', 'badge-icon-laptop')} color="inherit" onClick={handleClickCart}>
                         <Tippy delay={[0, 50]} content="Cart" placement="bottom" theme="light" animation="scale">
                             <Badge badgeContent={cartItemCount} color="error" className={cx('tada')}>
                                 <ShoppingBag sx={{ fontSize: 36 }} />
@@ -126,12 +136,12 @@ function Header() {
                         </Tippy>
                     </Button>
                     {!isLoggedIn && (
-                        <Button primary onClick={handleClickLogin}>
+                        <Button className={cx('hidden-lt-tablet')} primary onClick={handleClickLogin}>
                             Log in
                         </Button>
                     )}
                     {isLoggedIn && (
-                        <>
+                        <div className={cx('info', 'hidden-lt-tablet')}>
                             <img src={avatar} alt="avatar" className={cx('user-avatar')} />
                             <span className={cx('user-name')}>{fullName}</span>
                             <Tippy
@@ -145,7 +155,7 @@ function Header() {
                                     <Logout />
                                 </button>
                             </Tippy>
-                        </>
+                        </div>
                     )}
                 </div>
             </div>

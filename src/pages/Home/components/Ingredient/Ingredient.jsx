@@ -12,7 +12,7 @@ function Ingredient(props) {
     return (
         <section className={cx('wrapper')}>
             <div className={cx('thumb')} style={{ backgroundImage: `url(${IngredientsThumb})` }}>
-                <div className={cx('card-left')}>
+                <div className={cx('hidden-lt-tablet', 'card-left')}>
                     {homeIngredientsData.leftData.map(({ title, content, order }, index) => (
                         <div className={cx('card-container')} key={`${title}-${index}`}>
                             <div className={cx('card-item')}>
@@ -23,7 +23,7 @@ function Ingredient(props) {
                         </div>
                     ))}
                 </div>
-                <div className={cx('card-right')}>
+                <div className={cx('hidden-lt-tablet', 'card-right')}>
                     {homeIngredientsData.rightData.map(({ title, content, order }, index) => (
                         <div className={cx('card-container')} key={`${title}-${index}`}>
                             <div key={index} className={cx('card-item')}>
@@ -34,8 +34,8 @@ function Ingredient(props) {
                         </div>
                     ))}
                 </div>
-                <span className={cx('shape-first')} style={{ backgroundImage: `url(${ShapeOne})` }}></span>
-                <span className={cx('shape-second')} style={{ backgroundImage: `url(${ShapeTwo})` }}></span>
+                <span className={cx('hidden-lt-tablet', 'shape-first')} style={{ backgroundImage: `url(${ShapeOne})` }}></span>
+                <span className={cx('hidden-lt-tablet', 'shape-second')} style={{ backgroundImage: `url(${ShapeTwo})` }}></span>
             </div>
 
             <div className={cx('content')}>

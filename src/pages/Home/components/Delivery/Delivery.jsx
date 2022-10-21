@@ -6,9 +6,7 @@ import styles from './Delivery.module.scss';
 
 const cx = classNames.bind(styles);
 
-Delivery.propTypes = {};
-
-function Delivery(props) {
+function Delivery() {
     return (
         <section className={cx('wrapper', 'container')}>
             <div className={cx('content')}>

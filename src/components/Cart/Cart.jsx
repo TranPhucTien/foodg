@@ -1,7 +1,7 @@
 import { Add, Close, DeleteOutline, Remove } from '@mui/icons-material';
 import classNames from 'classnames/bind';
 import { useDispatch, useSelector } from 'react-redux';
-import { Link, useLocation, useNavigate } from 'react-router-dom';
+import { useLocation, useNavigate } from 'react-router-dom';
 import config from '~/config';
 import { FIRST_SHOW_ORDER, PRICE_BY_SIZE } from '~/constants';
 import { showDialogAuth } from '~/Layouts/components/Header/modeSlice';

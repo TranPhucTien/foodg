@@ -292,3 +292,17 @@ body {
         transform: scale(1.2);
     }
 }
+
+// Tablet and mobile
+@media only screen and (max-width: 1023px) {
+    .hidden-lt-tablet {
+        display: none;
+    }
+}
+
+// Tablet and PC
+@media only screen and (min-width: 740px) {
+    .hidden-mt-mobile {
+        display: none;
+    }
+}

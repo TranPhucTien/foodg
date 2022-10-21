@@ -1,3 +1,4 @@
+import { ExpandMore } from '@mui/icons-material';
 import { Pagination } from '@mui/material';
 import { useQuery } from '@tanstack/react-query';
 import classNames from 'classnames/bind';
@@ -23,6 +24,7 @@ function ListPage() {
     const navigate = useNavigate();
     const location = useLocation();
     const listPageRef = useRef();
+    const [isShowCategory, setIsShowCategory] = useState(false);
     const queryParams = useMemo(() => {
         const params = queryString.parse(location.search);
 
@@ -112,24 +114,39 @@ function ListPage() {
         });
     };
 
+    const handleShowCategory = () => {
+        setIsShowCategory((prev) => !prev);
+    };
+
     return (
         <section className={cx('list-page')} ref={listPageRef}>
             <div className={cx('container')}>
                 <div className={cx('row')}>
-                    <div className={cx('col', 'l-2', 'm-2', 'c-0')}>
+                    <div className={cx('col', 'l-2', 'm-3', 'c-0')}>
                         <ProductFilters onChange={handleFiltersChange} />
                     </div>
 
-                    <div className={cx('col', 'l-10', 'm-10', 'c-12', 'product-list')}>
+                    <div className={cx('col', 'l-10', 'm-9', 'c-12', 'product-list')}>
                         <div className={cx('product-filters', 'row')}>
-                            <div className={cx('col', 'l-10')}>
+                            <div className={cx('col', 'l-10', 'm-8', 'c-12')}>
                                 <Search
                                     onChange={handleSearchChange}
                                     searchLoading={searchLoading}
                                     currentValue={queryParams.q}
                                 />
                             </div>
-                            <div className={cx('col', 'l-2')}>
+                            <div className={cx('col', 'l-0', 'm-0', 'c-12')}>
+                                <div className={cx('category-mobile')} onClick={handleShowCategory}>
+                                    <span>Filter by category</span>
+                                    <ExpandMore sx={{ fontSize: '2rem' }} />
+                                </div>
+                            </div>
+                            {isShowCategory && (
+                                <div className={cx('hidden-mt-mobile')}>
+                                    <ProductFilters onChange={handleFiltersChange} setIsShowCategory={setIsShowCategory} />
+                                </div>
+                            )}
+                            <div className={cx('col', 'l-2', 'm-4', 'c-12')}>
                                 <ProductSort
                                     currentSort={queryParams._sort}
                                     currentOrder={queryParams._order}

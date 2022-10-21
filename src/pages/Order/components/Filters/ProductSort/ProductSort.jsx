@@ -29,21 +29,29 @@ function ProductSort({ currentSort, currentOrder, onChange }) {
             value: 'Sort',
         }));
     }, [pathname]);
-    
+
     useEffect(() => {
-        sortOptions.forEach(({sort, order, value}) => {
+        sortOptions.forEach(({ sort, order, value }) => {
             if (currentSort === sort && currentOrder === order) {
-                setResult(prev => ({
+                setResult((prev) => ({
                     ...prev,
-                    value
-                }))
+                    value,
+                }));
             }
-        })
+        });
         // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [])
+    }, []);
 
     const handleHideResult = () => {
         setShowResult(false);
+    };
+
+    const handleDropdownClick = () => {
+        if (showResult) {
+            setShowResult(false);
+        } else {
+            setShowResult(true);
+        }
     };
 
     const handleSortClick = (sort, order, value) => {
@@ -79,10 +87,10 @@ function ProductSort({ currentSort, currentOrder, onChange }) {
                     </ul>
                 )}
             >
-                <div className={cx('drop')} onClick={() => setShowResult(true)}>
+                <div className={cx('drop')} onClick={handleDropdownClick}>
                     <div className={cx('drop-current')}>
                         <span>{result.value}</span>
-                        <ExpandMore sx={{fontSize: '2rem'}} />
+                        <ExpandMore sx={{ fontSize: '2rem' }} />
                     </div>
                 </div>
             </HeadlessTippy>

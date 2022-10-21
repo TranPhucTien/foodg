@@ -59,7 +59,7 @@ function Reviews(props) {
                 duration="4"
                 delay="2"
             />
-            <BackgroundIcon
+            {/* <BackgroundIcon
                 src={BackgroundIconSeven}
                 width="12"
                 bottom="20"
@@ -67,7 +67,7 @@ function Reviews(props) {
                 type="scale"
                 duration="10"
                 delay="3"
-            />
+            /> */}
             <BackgroundIcon
                 src={BackgroundIconEight}
                 width="13"

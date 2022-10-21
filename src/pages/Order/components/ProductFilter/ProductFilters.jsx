@@ -5,13 +5,13 @@ ProductFilters.propTypes = {
     onChange: PropTypes.func,
 };
 
-function ProductFilters({ onChange }) {
+function ProductFilters({ onChange, setIsShowCategory }) {
     const handleCategoryChange = (newCategoryType) => {
         if (onChange) onChange(newCategoryType);
     };
     return (
         <div>
-            <FilterByCategory onChange={handleCategoryChange} />
+            <FilterByCategory onChange={handleCategoryChange} setIsShowCategory={setIsShowCategory} />
         </div>
     );
 }
