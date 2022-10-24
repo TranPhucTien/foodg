@@ -25,7 +25,7 @@ function Home(props) {
             <Category />
             <Delivery />
             <Product />
-            {/* <Analysis /> */}
+            <Analysis />
             <Reviews />
         </>
     );

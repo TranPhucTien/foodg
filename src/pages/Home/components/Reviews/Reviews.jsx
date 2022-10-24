@@ -2,7 +2,7 @@ import classNames from 'classnames/bind';
 import { Autoplay, Navigation, Pagination } from 'swiper';
 import { Swiper, SwiperSlide } from 'swiper/react';
 import BackgroundIcon from '~/components/BackgroundIcon';
-import { BackgroundIconEight, BackgroundIconFive, BackgroundIconFour, BackgroundIconSeven, BackgroundIconSix } from '~/utils/backgroundIcons';
+import { BackgroundIconEight, BackgroundIconFive, BackgroundIconFour, BackgroundIconSix } from '~/utils/backgroundIcons';
 import { homeReviewsData } from '~/utils/staticData';
 import styles from './Reviews.module.scss';
 

@@ -1,12 +1,11 @@
-import React, { useEffect, useState } from 'react';
-import PropTypes from 'prop-types';
+import { useQuery } from '@tanstack/react-query';
 import classNames from 'classnames/bind';
-import styles from './ProductRelative.module.scss';
-import { useQuery, useQueryClient } from '@tanstack/react-query';
-import { GET_CURRENT_TYPE } from '~/constants';
+import { useEffect, useState } from 'react';
 import productApi from '~/api/productApi';
-import SkeletonProductList from '../ProductList/SkeletonProductList';
+import { GET_CURRENT_TYPE } from '~/constants';
 import ProductList from '../ProductList';
+import SkeletonProductList from '../ProductList/SkeletonProductList';
+import styles from './ProductRelative.module.scss';
 
 const cx = classNames.bind(styles);
 

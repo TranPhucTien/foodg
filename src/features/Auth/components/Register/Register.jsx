@@ -1,13 +1,9 @@
 import { unwrapResult } from '@reduxjs/toolkit';
-import classNames from 'classnames/bind';
 import PropTypes from 'prop-types';
 import { useDispatch } from 'react-redux';
 import { toast } from 'react-toastify';
 import { register } from '../../userSlice';
 import RegisterForm from '../RegisterForm';
-import styles from './Register.module.scss';
-
-const cx = classNames.bind(styles);
 
 Register.propTypes = {
     closeDialog: PropTypes.func,

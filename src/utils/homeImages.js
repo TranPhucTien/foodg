@@ -1,7 +1,7 @@
 // banner
-import BannerOne from "~/assets/images/Home/banner-st.jpg";
 import BannerSecond from "~/assets/images/Home/banner-nd.jpg";
 import BannerThree from "~/assets/images/Home/banner-rd.jpg";
+import BannerOne from "~/assets/images/Home/banner-st.jpg";
 
 // work
 import ArrowOne from "~/assets/images/Home/arrow-1.png";
@@ -30,7 +30,6 @@ import AnalysisThumb from "~/assets/images/Home/analysis-thumb.jpg";
 import ReviewOne from "~/assets/images/Home/user-review-1.jpg";
 import ReviewTwo from "~/assets/images/Home/user-review-2.jpg";
 import ReviewThree from "~/assets/images/Home/user-review-3.jpg";
-import AnReview from "~/assets/images/Home/an_review.jpg";
 
 export {
   BannerOne,

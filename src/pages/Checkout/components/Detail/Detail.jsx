@@ -1,13 +1,11 @@
-import React from 'react';
-import PropTypes from 'prop-types';
 import classNames from 'classnames/bind';
-import styles from './Detail.module.scss';
 import { useSelector } from 'react-redux';
+import BackgroundIcon from '~/components/BackgroundIcon';
 import { cartTotalSelector, totalDiscountSelector } from '~/components/Cart/selectors';
 import Img from '~/components/Img';
 import { PRICE_BY_SIZE } from '~/constants';
-import BackgroundIcon from '~/components/BackgroundIcon';
 import { BackgroundIconBlurFour, BackgroundIconBlurOne, BackgroundIconBlurThree, BackgroundIconBlurTwo } from '~/utils/backgroundIcons';
+import styles from './Detail.module.scss';
 
 const cx = classNames.bind(styles);
 

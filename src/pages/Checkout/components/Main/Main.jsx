@@ -1,15 +1,12 @@
 import classNames from 'classnames/bind';
+import PropTypes from 'prop-types';
 import { useDispatch, useSelector } from 'react-redux';
 import Button from '~/components/Button';
 import { EmptyProductLottie, LoginLottie } from '~/components/Lottie';
 import config from '~/config';
 import { FIRST_SHOW_ORDER } from '~/constants';
 import { showDialogAuth } from '~/Layouts/components/Header/modeSlice';
-import Detail from '../Detail';
-import Form from '../Form';
-import Progress from '../Progress';
 import styles from './Main.module.scss';
-import PropTypes from 'prop-types';
 
 const cx = classNames.bind(styles);
 

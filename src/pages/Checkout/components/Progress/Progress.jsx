@@ -1,8 +1,6 @@
-import React from 'react';
-import PropTypes from 'prop-types';
+import { ListAlt, PeopleAlt, ThumbUp } from '@mui/icons-material';
 import classNames from 'classnames/bind';
 import styles from './Progress.module.scss';
-import { ListAlt, PeopleAlt, ThumbUp } from '@mui/icons-material';
 
 const cx = classNames.bind(styles);
 
