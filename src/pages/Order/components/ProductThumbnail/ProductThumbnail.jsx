@@ -1,10 +1,8 @@
 import classNames from 'classnames/bind';
 import PropTypes from 'prop-types';
 import { useEffect, useState } from 'react';
-import { SideBySideMagnifier } from 'react-image-magnifiers';
-import imageError from '~/assets/images/image-error.png';
-import styles from './ProductThumbnail.module.scss';
 import Img from '~/components/Img';
+import styles from './ProductThumbnail.module.scss';
 
 const cx = classNames.bind(styles);
 
@@ -20,20 +18,13 @@ function ProductThumbnail({ product }) {
         setImg(product.img || '')
     }, [product])
 
-    const handleError = () => {
-        setImg(imageError);
-    };
-
     return (
         <div className={cx('wrapper')}>
             <div className={cx("row", 'inner')}>
                 <div className={cx('col', 'l-12', 'image-wrapper-main')}>
-                    <SideBySideMagnifier
-                        alwaysInPlace={true}
-                        transitionSpeedInPlace={0.3}
-                        imageSrc={img}
-                        imageAlt={product.name}
-                        onError={handleError}
+                    <Img
+                        src={img}
+                        alt={product.name}
                         className={cx('image-main', { last })}
                     />
                 </div>
