@@ -143,7 +143,10 @@ function ListPage() {
                             </div>
                             {isShowCategory && (
                                 <div className={cx('hidden-mt-mobile')}>
-                                    <ProductFilters onChange={handleFiltersChange} setIsShowCategory={setIsShowCategory} />
+                                    <ProductFilters
+                                        onChange={handleFiltersChange}
+                                        setIsShowCategory={setIsShowCategory}
+                                    />
                                 </div>
                             )}
                             <div className={cx('col', 'l-2', 'm-4', 'c-12')}>

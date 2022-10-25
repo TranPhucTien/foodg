@@ -23,7 +23,9 @@ function FilterByCategory({ onChange, setIsShowCategory }) {
 
     const handleClickCategory = (option) => {
         setType(option.type);
-        setIsShowCategory(prev => !prev)
+        if (setIsShowCategory) {
+            setIsShowCategory((prev) => !prev);
+        }
         if (onChange) {
             onChange(option.type);
         }
