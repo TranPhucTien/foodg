@@ -1,7 +1,7 @@
 import axios from 'axios';
 
 const axiosClient = axios.create({
-    baseURL: 'https://ig-food-menus.herokuapp.com/',
+    baseURL: 'https://free-food-menus-api-production.up.railway.app/',
     headers: {
         'Content-Type': 'application/json',
     },
