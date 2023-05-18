@@ -11,17 +11,17 @@ const cx = classNames.bind(styles);
 
 ProductRelative.propTypes = {};
 
-function ProductRelative(props) {
+function ProductRelative() {
     const [randProducts, setRandProducts] = useState([]);
     const type = GET_CURRENT_TYPE();
 
     const { data, isLoading } = useQuery(['relative-product'], async () => {
-        return await productApi.getAll(type, {});
+        return await (productApi.getAll(type, {}));
     });
-
+    
     
     useEffect(() => {
-        const products = data ? data.data.data : [];
+        const products = data ? data.data.data.data : [];
         if (products.length <= 0) return;
 
         const newProducts = [];

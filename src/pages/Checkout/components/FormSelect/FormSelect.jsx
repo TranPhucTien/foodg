@@ -15,7 +15,7 @@ FormSelect.propTypes = {
 let borderColor = 'rgba(0, 0, 0, 0.15)';
 let placeholderColor = 'rgba(0, 0, 0, 0.55)';
 
-function FormSelect({ error, helperText, defaulValue = {}, field = {} }) {
+function FormSelect({ error, helperText, defaultValue = {}, field = {} }) {
     if (error) {
         const errorColor = '#fe2c55';
         borderColor = errorColor;
@@ -32,7 +32,7 @@ function FormSelect({ error, helperText, defaulValue = {}, field = {} }) {
                 placeholder="Select a country"
                 styles={customStyles}
                 options={countriesList}
-                defaultValue={defaulValue}
+                defaultValue={defaultValue}
             />
             <span className={cx('error-text')}>{helperText}</span>
         </div>

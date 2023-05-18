@@ -1,7 +1,7 @@
 import axios from 'axios';
 
 const axiosClient = axios.create({
-    baseURL: 'https://free-food-menus-api-production.up.railway.app/',
+    baseURL: 'http://localhost:8080',
     headers: {
         'Content-Type': 'application/json',
     },

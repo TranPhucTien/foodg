@@ -65,7 +65,7 @@ function ListPage() {
             keepPreviousData: true,
         },
     );
-    const listProduct = data ? data.data.data : [];
+    const listProduct = data ? data.data.data.data : [];
 
     useEffect(() => {
         if (isLoading === false && data) {
