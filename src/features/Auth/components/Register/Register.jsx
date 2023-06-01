@@ -4,6 +4,7 @@ import { useDispatch } from 'react-redux';
 import { toast } from 'react-toastify';
 import { register } from '../../userSlice';
 import RegisterForm from '../RegisterForm';
+import { showOtpAuthMode } from '~/Layouts/components/Header/modeSlice';
 
 Register.propTypes = {
     closeDialog: PropTypes.func,
@@ -14,17 +15,15 @@ function Register({ closeDialog }) {
 
     const handleSubmit = async (values) => {
         try {
-            // auto set username = email
-            values.username = values.email;
-
             const action = register(values);
             const resultAction = await dispatch(action);
             unwrapResult(resultAction);
 
             // do something here on register successfully
-            if (closeDialog) {
-                closeDialog();
-            }
+            // if (closeDialog) {
+            //     closeDialog();
+            // }
+            dispatch(showOtpAuthMode());
 
             toast.success('Register successfully.');
         } catch (error) {

@@ -7,7 +7,7 @@ import * as yup from 'yup';
 import Button from '~/components/Button';
 import FormAuth from '~/components/FormAuth';
 import InputField from '~/components/formControl/InputField';
-import { showLoginMode } from '~/Layouts/components/Header/modeSlice';
+import { showLoginMode, showOtpAuthMode } from '~/Layouts/components/Header/modeSlice';
 import styles from './RegisterForm.module.scss';
 
 const cx = classNames.bind(styles);
@@ -19,6 +19,9 @@ RegisterForm.propTypes = {
 function RegisterForm(props) {
     const schema = yup
         .object({
+            username: yup
+            .string()
+            .required('Please enter your username.'),
             fullName: yup
                 .string()
                 .required('Please enter your full name.')
@@ -41,6 +44,7 @@ function RegisterForm(props) {
 
     const form = useForm({
         defaultValues: {
+            username: '',
             fullName: '',
             email: '',
             password: '',
@@ -75,11 +79,12 @@ function RegisterForm(props) {
             changeMode={changeMode}
         >
             <form onSubmit={form.handleSubmit(handleSubmit)}>
+                <InputField name="username" label="Username" form={form} />
                 <InputField name="fullName" label="Full Name" form={form} capitalize />
                 <InputField name="email" label="Email" form={form} />
                 <InputField type="password" name="password" label="Password" form={form} />
                 <InputField type="password" name="retypePassword" label="Retype Password" form={form} />
-                <Button disabled={isSubmitting} primary large fullWidth className={cx('button')}>
+                <Button disabled={isSubmitting} primary large fullWidth className={cx('button')} >
                     Sign up
                 </Button>
             </form>

@@ -1,23 +1,44 @@
 import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
-import userApi from '~/api/userApi';
+import { useDispatch } from 'react-redux';
+import { customerApi } from '~/api/userApi';
 import StorageKeys from '~/constants/storage-keys';
 // import StorageKeys from '~/constants/storage-keys';
 
 export const register = createAsyncThunk('user/register', async (payload) => {
     // Call API to register
-    const data = await userApi.register(payload);
+    const data = await customerApi.register(payload);
+    const userData = data.data.data;
+    console.log("🚀 ~ file: userSlice.js:11 ~ register ~ userData:", userData)
 
     // Save data to local storage
-    localStorage.setItem(StorageKeys.TOKEN, data.jwt);
-    localStorage.setItem(StorageKeys.USER, JSON.stringify(data.user));
+    // localStorage.setItem(StorageKeys.TOKEN, data.jwt);
+    localStorage.setItem(StorageKeys.USER, JSON.stringify(userData));
 
     // return user data
-    return data.user;
+    return userData;
+});
+
+export const otpAuth = createAsyncThunk('user/otp', async ({ userData, otp }) => {
+    const data = await customerApi.otpAuth(userData, otp);
+    const user = data.data.data;
+    console.log("🚀 ~ file: userSlice.js:24 ~ otpAuth ~ user:", user)
+    // localStorage.setItem(StorageKeys.USER, JSON.stringify(user));
+
+    return user;
+});
+
+export const forgetPass = createAsyncThunk('user/forgetPass', async (userData) => {
+    const data = await customerApi.forgetPass(userData);
+    const user = data.data.data;
+    console.log("🚀 ~ file: userSlice.js:24 ~ otpAuth ~ user:", user)
+    
+
+    return user;
 });
 
 export const login = createAsyncThunk('user/login', async (payload) => {
     // Call API to register
-    const data = await userApi.login(payload);
+    const data = await customerApi.login(payload);
 
     // Save data to local storage
     localStorage.setItem(StorageKeys.TOKEN, data.jwt);

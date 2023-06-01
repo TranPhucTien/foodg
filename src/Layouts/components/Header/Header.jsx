@@ -22,6 +22,7 @@ import Register from '~/features/Auth/components/Register';
 import { logout } from '~/features/Auth/userSlice';
 import styles from './Header.module.scss';
 import { hideDialogAuth, showDialogAuth, showLoginMode } from './modeSlice';
+import OtpAuth from '~/features/Auth/components/OtpAuth/OtpAuth';
 
 const cx = classNames.bind(styles);
 
@@ -29,9 +30,10 @@ Header.propTypes = {};
 
 function Header() {
     const loggedInUser = useSelector((state) => state.user.current);
-    const isLoggedIn = !!loggedInUser.id;
+    console.log("🚀 ~ file: Header.jsx:33 ~ Header ~ loggedInUser:", loggedInUser)
+    const isLoggedIn = !!loggedInUser?.username;
     const mode = useSelector((state) => state.mode.mode);
-    const fullName = useSelector((state) => state.user.current.fullName);
+    const fullName = useSelector((state) => state.user.current?.fullName);
     const [background, setBackground] = useState(false);
     const [isShowMenu, setIsShowMenu] = useState(false)
     const headerRef = useRef();
@@ -167,6 +169,7 @@ function Header() {
                 <DialogContent sx={{ padding: 0 }}>
                     {mode === MODE.REGISTER && <Register closeDialog={handleCloseAuth} />}
                     {mode === MODE.LOGIN && <Login closeDialog={handleCloseAuth} />}
+                    {mode === MODE.OTP_AUTH && <OtpAuth closeDialog={handleCloseAuth} />}
                 </DialogContent>
             </Dialog>
         </header>

@@ -17,7 +17,7 @@ Main.propTypes = {
 function Main({ children }) {
     const loggedInUser = useSelector((state) => state.user.current);
     const products = useSelector((state) => state.cart.cartItems);
-    const isLoggedIn = !!loggedInUser.id;
+    const isLoggedIn = !!loggedInUser?.id;
     const dispatch = useDispatch();
 
     const handleClickLogin = () => {

@@ -15,6 +15,7 @@ export const PRICE_SIZE_L = 1.5;
 export const MODE = {
     LOGIN: 'login',
     REGISTER: 'register',
+    OTP_AUTH: 'otp_auth'
 };
 
 export const GET_CURRENT_TYPE = () => {

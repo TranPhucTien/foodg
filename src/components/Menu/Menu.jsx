@@ -19,8 +19,8 @@ Menu.propTypes = {
 function Menu({ isShow, setIsShow }) {
     const dispatch = useDispatch();
     const loggedInUser = useSelector((state) => state.user.current);
-    const isLoggedIn = !!loggedInUser.id;
-    const fullName = useSelector((state) => state.user.current.fullName);
+    const isLoggedIn = !!loggedInUser?.id;
+    const fullName = useSelector((state) => state.user.current?.fullName);
 
     const handleCloseMenu = () => {
         setIsShow(false);
