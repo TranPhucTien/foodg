@@ -1,3 +1,4 @@
+import { FIRST_SHOW_ORDER } from '~/constants';
 import axiosClient from './axiosClient';
 
 const productApi = {
@@ -6,7 +7,7 @@ const productApi = {
         //newParams._start = !params._page || params._page <= 1 ? 0 : (params._page - 1) * (params._limit || 50);
 
         // fetch product list + count
-        const productList = await axiosClient.get(`/categories/${type}`, { params: newParams });
+        const productList = await axiosClient.get(`/categories/${type ? type : FIRST_SHOW_ORDER}`, { params: newParams });
         const count = (await axiosClient.get('/pagination')).data;
         let total = count.data[`${type}`] || 1;
 

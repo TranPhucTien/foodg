@@ -1,6 +1,7 @@
 import { useLocation } from 'react-router-dom';
+import categoryApi from '~/api/categoryApi';
 
-export const FIRST_SHOW_ORDER = 'our-foods';
+export const FIRST_SHOW_ORDER = 'breads';
 
 export const maximumItemQuantity = 20;
 export const minimumItemQuantity = 1;
@@ -15,7 +16,7 @@ export const PRICE_SIZE_L = 1.5;
 export const MODE = {
     LOGIN: 'login',
     REGISTER: 'register',
-    OTP_AUTH: 'otp_auth'
+    OTP_AUTH: 'otp_auth',
 };
 
 export const GET_CURRENT_TYPE = () => {
