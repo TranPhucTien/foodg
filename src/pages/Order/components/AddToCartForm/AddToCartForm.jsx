@@ -77,6 +77,12 @@ function AddToCartForm({ onSubmit = null, onChange = null }) {
             .required('Please enter quantity')
             .min(minimumItemQuantity, `Minimum value is ${minimumItemQuantity}`)
             .max(maximumItemQuantity, `Maximum value is ${maximumItemQuantity}`)
+            .test('is-even', 'Please enter an even number', (value) => {
+                if (value % 1 === 0) {
+                    return true;
+                }
+                return false;
+            })
             .typeError('Please enter a number'),
     });
 

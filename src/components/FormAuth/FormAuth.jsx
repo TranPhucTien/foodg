@@ -17,7 +17,18 @@ FormAuth.propTypes = {
     changeMode: PropTypes.func,
 };
 
-function FormAuth({ children, title, name, subName, footerTitle, footerSubTitle, isSubmitting, changeMode }) {
+function FormAuth({
+    children,
+    title,
+    name,
+    subName,
+    footerTitle,
+    footerSubTitle,
+    footerSubTitle2,
+    isSubmitting,
+    changeMode,
+    showOtp,
+}) {
     return (
         <section className={cx('wrapper')}>
             {isSubmitting && <LinearProgress sx={{ position: 'absolute', top: '2px', left: 0, right: 0 }} />}
@@ -33,7 +44,14 @@ function FormAuth({ children, title, name, subName, footerTitle, footerSubTitle,
             </div>
             <div className={cx('footer')}>
                 <span>{footerTitle}</span>
-                <span className={cx('footer-link')} onClick={changeMode}>{footerSubTitle}</span>
+                <span className={cx('footer-link')} onClick={changeMode}>
+                    {footerSubTitle}
+                </span>
+                {footerSubTitle2 && (
+                    <span className={cx('footer-link', 'end')} onClick={showOtp}>
+                        {footerSubTitle2}
+                    </span>
+                )}
             </div>
         </section>
     );

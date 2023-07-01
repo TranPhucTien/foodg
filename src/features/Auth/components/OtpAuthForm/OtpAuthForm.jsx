@@ -33,9 +33,7 @@ function OtpAuthForm(props) {
         },
         resolver: yupResolver(schema),
     });
-
-    console.log({userData, otp})
-
+    
     const handleSubmit = async (event) => {
         event.preventDefault();
         const { onSubmit } = props;

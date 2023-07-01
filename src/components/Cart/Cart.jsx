@@ -21,7 +21,7 @@ function Cart(props) {
     const showCart = useSelector((state) => state.cart.showCart);
     const cartList = useSelector((state) => state.cart.cartItems);
     const loggedInUser = useSelector((state) => state.user.current);
-    const isLoggedIn = !!loggedInUser?.id;
+    const isLoggedIn = !!(loggedInUser?.username && loggedInUser?.fullName);
     const navigate = useNavigate();
     const { pathname } = useLocation();
     const dispatch = useDispatch();

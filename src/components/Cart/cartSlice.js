@@ -28,6 +28,10 @@ const cartSlice = createSlice({
             state.showCart = false;
         },
 
+        update: (state, action) => {
+            state.cartItems = action.payload;
+        },
+
         addToCart(state, action) {
             const newItem = action.payload;
             const index = state.cartItems.findIndex((item) => item.id === newItem.id && item.size === newItem.size);
@@ -113,5 +117,6 @@ export const {
     removeFromCart,
     increaseItem,
     decreaseItem,
+    update
 } = actions;
 export default reducer;

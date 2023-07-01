@@ -1,10 +1,15 @@
 import classNames from 'classnames/bind';
 import { useSelector } from 'react-redux';
 import BackgroundIcon from '~/components/BackgroundIcon';
-import { cartTotalSelector, totalDiscountSelector } from '~/components/Cart/selectors';
+import { cartItemsCountSelector, cartTotalSelector, totalDiscountSelector } from '~/components/Cart/selectors';
 import Img from '~/components/Img';
 import { PRICE_BY_SIZE } from '~/constants';
-import { BackgroundIconBlurFour, BackgroundIconBlurOne, BackgroundIconBlurThree, BackgroundIconBlurTwo } from '~/utils/backgroundIcons';
+import {
+    BackgroundIconBlurFour,
+    BackgroundIconBlurOne,
+    BackgroundIconBlurThree,
+    BackgroundIconBlurTwo,
+} from '~/utils/backgroundIcons';
 import styles from './Detail.module.scss';
 
 const cx = classNames.bind(styles);
@@ -12,10 +17,12 @@ const cx = classNames.bind(styles);
 Detail.propTypes = {};
 
 function Detail(props) {
+    const { feeData } = props;
     const list = useSelector((state) => state.cart.cartItems);
-    const listReverse = [...list].reverse()
-    const total = useSelector(cartTotalSelector);
-    const discount = useSelector(totalDiscountSelector);
+    const listReverse = [...list].reverse();
+    const discountProduct = useSelector(totalDiscountSelector);
+    const discount = discountProduct + feeData.discount
+    const total = useSelector(state => cartTotalSelector(state, feeData.shippingCost, discount));
 
     return (
         <aside className={cx('wrapper')}>
@@ -33,7 +40,7 @@ function Detail(props) {
                                 </span>
                                 <span className={cx('quantity')}>Quantity: {quantity}</span>
                             </div>
-                            <span className={cx('price')}>${priceBySize * quantity}</span>
+                            <span className={cx('price')}>${(priceBySize * quantity).toFixed(2)}</span>
                         </li>
                     );
                 })}
@@ -45,7 +52,7 @@ function Detail(props) {
                 </div>
                 <div className={cx('info-price-container')}>
                     <span className={cx('info-price-label')}>Shipping Cost</span>
-                    <span className={cx('info-price-content')}>Free</span>
+                    <span className={cx('info-price-content')}>${feeData.shippingCost}</span>
                 </div>
                 <div className={cx('info-price-container')}>
                     <span className={cx('info-price-label')}>Taxes (estimated)</span>
@@ -57,44 +64,44 @@ function Detail(props) {
                 <span className={cx('total')}>${total}</span>
             </div>
             <BackgroundIcon
-                    src={BackgroundIconBlurOne}
-                    width="25"
-                    top="0"
-                    right="-30"
-                    type="float"
-                    duration="3"
-                    zIndex="0"
-                />
-                <BackgroundIcon
-                    src={BackgroundIconBlurTwo}
-                    width="18"
-                    bottom="30"
-                    left="5"
-                    type="float"
-                    duration="4"
-                    zIndex="0"
-                    delay="1"
-                />
-                <BackgroundIcon
-                    src={BackgroundIconBlurThree}
-                    width="20"
-                    bottom="5"
-                    right="40"
-                    type="scale"
-                    duration="6"
-                    zIndex="0"
-                    delay="2"
-                />
-                <BackgroundIcon
-                    src={BackgroundIconBlurFour}
-                    width="12.5"
-                    top="5"
-                    left="30"
-                    type="scale"
-                    duration="5"
-                    zIndex="0"
-                    delay="1"
-                />
+                src={BackgroundIconBlurOne}
+                width="25"
+                top="0"
+                right="-30"
+                type="float"
+                duration="3"
+                zIndex="0"
+            />
+            <BackgroundIcon
+                src={BackgroundIconBlurTwo}
+                width="18"
+                bottom="30"
+                left="5"
+                type="float"
+                duration="4"
+                zIndex="0"
+                delay="1"
+            />
+            <BackgroundIcon
+                src={BackgroundIconBlurThree}
+                width="20"
+                bottom="5"
+                right="40"
+                type="scale"
+                duration="6"
+                zIndex="0"
+                delay="2"
+            />
+            <BackgroundIcon
+                src={BackgroundIconBlurFour}
+                width="12.5"
+                top="5"
+                left="30"
+                type="scale"
+                duration="5"
+                zIndex="0"
+                delay="1"
+            />
         </aside>
     );
 }

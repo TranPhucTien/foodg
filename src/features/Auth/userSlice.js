@@ -1,48 +1,55 @@
 import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
 import { useDispatch } from 'react-redux';
+import { toast } from 'react-toastify';
 import { customerApi } from '~/api/userApi';
 import StorageKeys from '~/constants/storage-keys';
 // import StorageKeys from '~/constants/storage-keys';
 
-export const register = createAsyncThunk('user/register', async (payload) => {
+const SLUG = 'customers';
+
+export const register = createAsyncThunk(SLUG + '/register', async (payload) => {
     // Call API to register
     const data = await customerApi.register(payload);
     const userData = data.data.data;
-    console.log("🚀 ~ file: userSlice.js:11 ~ register ~ userData:", userData)
+    console.log(userData);
 
     // Save data to local storage
     // localStorage.setItem(StorageKeys.TOKEN, data.jwt);
-    localStorage.setItem(StorageKeys.USER, JSON.stringify(userData));
 
     // return user data
-    return userData;
+    return { id: userData.id, username: userData.username, email: userData.email };
 });
 
-export const otpAuth = createAsyncThunk('user/otp', async ({ userData, otp }) => {
+export const otpAuth = createAsyncThunk(SLUG + '/otp', async ({ userData, otp }) => {
     const data = await customerApi.otpAuth(userData, otp);
     const user = data.data.data;
-    console.log("🚀 ~ file: userSlice.js:24 ~ otpAuth ~ user:", user)
-    // localStorage.setItem(StorageKeys.USER, JSON.stringify(user));
+    localStorage.setItem(StorageKeys.USER, JSON.stringify(user));
 
-    return user;
+    return data;
 });
 
-export const forgetPass = createAsyncThunk('user/forgetPass', async (userData) => {
+export const forgetPass = createAsyncThunk(SLUG + '/forgetPass', async (userData) => {
     const data = await customerApi.forgetPass(userData);
     const user = data.data.data;
-    console.log("🚀 ~ file: userSlice.js:24 ~ otpAuth ~ user:", user)
-    
+    console.log('🚀 ~ file: userSlice.js:24 ~ otpAuth ~ user:', user);
 
     return user;
 });
 
-export const login = createAsyncThunk('user/login', async (payload) => {
+export const login = createAsyncThunk(SLUG + '/loginCustomer', async (payload) => {
     // Call API to register
     const data = await customerApi.login(payload);
 
+    if (data.data.data == null) {
+        toast.error(data.data.message);
+        return null;
+    } else {
+        toast.success(data.data.message);
+    }
+
     // Save data to local storage
-    localStorage.setItem(StorageKeys.TOKEN, data.jwt);
-    localStorage.setItem(StorageKeys.USER, JSON.stringify(data.user));
+    // localStorage.setItem(StorageKeys.TOKEN, data.jwt);
+    localStorage.setItem(StorageKeys.USER, JSON.stringify(data.data.data));
 
     // return user data
     return data.user;
@@ -60,8 +67,12 @@ const userSlice = createSlice({
             localStorage.removeItem(StorageKeys.USER);
             localStorage.removeItem(StorageKeys.TOKEN);
             localStorage.removeItem(StorageKeys.USER_INFO);
+            localStorage.removeItem(StorageKeys.CART_ITEMS);
 
             state.current = {}; // update state
+        },
+        updateUser: (state, action) => {
+            state.current = action.payload;
         },
     },
     extraReducers: {
@@ -76,5 +87,5 @@ const userSlice = createSlice({
 });
 
 const { actions, reducer } = userSlice;
-export const { logout } = actions;
+export const { logout, updateUser } = actions;
 export default reducer;

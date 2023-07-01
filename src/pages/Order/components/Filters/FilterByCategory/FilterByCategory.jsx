@@ -3,11 +3,11 @@ import PropTypes from 'prop-types';
 import { useEffect, useState } from 'react';
 import { useParams } from 'react-router-dom';
 import { FIRST_SHOW_ORDER } from '~/constants';
-import { typeOptions } from '~/utils/Filters';
 import styles from './FilterByCategory.module.scss';
-import axiosClient from '~/api/axiosClient';
 import categoryApi from '~/api/categoryApi';
 import { useQuery } from '@tanstack/react-query';
+import { Sandwich } from '~/utils/shopSvgs';
+import { Bread } from '~/utils/shopSvgs';
 
 const cx = classNames.bind(styles);
 
@@ -57,7 +57,11 @@ function FilterByCategory({ onChange, setIsShowCategory }) {
                         key={option.id}
                         onClick={() => handleClickCategory(option)}
                     >
-                        <img src={option.img} alt={option.name} className={cx('img')} />
+                        {option.img == null ? (
+                            <img src={Bread} alt={option.name} className={cx('img')} />
+                        ) : (
+                            <img src={option.img} alt={option.name} className={cx('img')} />
+                        )}
                         <span>{option.name}</span>
                     </li>
                 ))}

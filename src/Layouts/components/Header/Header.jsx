@@ -13,7 +13,7 @@ import images from '~/assets/images';
 import avatar from '~/assets/images/avatar_default.png';
 import Button from '~/components/Button';
 import MenuMobile from '~/components/Menu'
-import { showCart } from '~/components/Cart/cartSlice';
+import { showCart, update } from '~/components/Cart/cartSlice';
 import { cartItemsCountSelector } from '~/components/Cart/selectors';
 import config from '~/config';
 import { MODE } from '~/constants';
@@ -23,6 +23,7 @@ import { logout } from '~/features/Auth/userSlice';
 import styles from './Header.module.scss';
 import { hideDialogAuth, showDialogAuth, showLoginMode } from './modeSlice';
 import OtpAuth from '~/features/Auth/components/OtpAuth/OtpAuth';
+import ForgetPassword from '~/features/Auth/components/ForgetPassword/ForgetPassword';
 
 const cx = classNames.bind(styles);
 
@@ -30,8 +31,9 @@ Header.propTypes = {};
 
 function Header() {
     const loggedInUser = useSelector((state) => state.user.current);
-    console.log("🚀 ~ file: Header.jsx:33 ~ Header ~ loggedInUser:", loggedInUser)
+    console.log("🚀 ~ file: Header.jsx:34 ~ Header ~ loggedInUser:", loggedInUser)
     const isLoggedIn = !!loggedInUser?.username;
+    console.log("🚀 ~ file: Header.jsx:35 ~ Header ~ isLoggedIn:", isLoggedIn)
     const mode = useSelector((state) => state.mode.mode);
     const fullName = useSelector((state) => state.user.current?.fullName);
     const [background, setBackground] = useState(false);
@@ -52,6 +54,8 @@ function Header() {
 
     const handleLogoutClick = () => {
         dispatch(logout());
+        dispatch(update([]))
+        // window.location.reload()
     };
 
     if (headerRef.current) {
@@ -170,6 +174,7 @@ function Header() {
                     {mode === MODE.REGISTER && <Register closeDialog={handleCloseAuth} />}
                     {mode === MODE.LOGIN && <Login closeDialog={handleCloseAuth} />}
                     {mode === MODE.OTP_AUTH && <OtpAuth closeDialog={handleCloseAuth} />}
+                    {mode === MODE.FORGE_PASSWORD && <ForgetPassword closeDialog={handleCloseAuth} />}
                 </DialogContent>
             </Dialog>
         </header>

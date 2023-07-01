@@ -25,7 +25,7 @@ function Register({ closeDialog }) {
             // }
             dispatch(showOtpAuthMode());
 
-            toast.success('Register successfully.');
+            toast.success('Please check your email.');
         } catch (error) {
             console.log('Failed to register: ', error);
             toast.error(error.message);

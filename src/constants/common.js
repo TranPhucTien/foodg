@@ -1,5 +1,4 @@
 import { useLocation } from 'react-router-dom';
-import categoryApi from '~/api/categoryApi';
 
 export const FIRST_SHOW_ORDER = 'breads';
 
@@ -17,6 +16,7 @@ export const MODE = {
     LOGIN: 'login',
     REGISTER: 'register',
     OTP_AUTH: 'otp_auth',
+    FORGE_PASSWORD: 'forget_password'
 };
 
 export const GET_CURRENT_TYPE = () => {

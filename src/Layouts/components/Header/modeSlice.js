@@ -18,6 +18,10 @@ const modeSlice = createSlice({
             state.mode = MODE.OTP_AUTH;
         },
 
+        showForgetPasswordMode(state) {
+            state.mode = MODE.FORGE_PASSWORD;
+        },
+
         showDialogAuth(state) {
             state.isShowDialog = true;
         },
@@ -29,5 +33,5 @@ const modeSlice = createSlice({
 });
 
 const { actions, reducer } = modeSlice;
-export const { showLoginMode, showRegisterMode, showOtpAuthMode, showDialogAuth, hideDialogAuth } = actions;
+export const { showLoginMode, showRegisterMode, showOtpAuthMode, showForgetPasswordMode, showDialogAuth, hideDialogAuth } = actions;
 export default reducer;

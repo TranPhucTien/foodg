@@ -16,7 +16,7 @@ InputField.propTypes = {
 };
 
 function InputField(props) {
-    const { form, name, label, disable, type, capitalize = false, className } = props;
+    const { form, name, label, disable, type, capitalize = false, className, onInput } = props;
     const { control } = form;
     const classes = cx('input', { [className]: className });
 
@@ -40,6 +40,7 @@ function InputField(props) {
                         disabled={disable}
                         capitalize={capitalize}
                         className={classes}
+                        onInput={onInput}
                     />
                 );
             }}

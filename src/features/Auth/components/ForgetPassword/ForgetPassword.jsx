@@ -2,36 +2,34 @@ import { unwrapResult } from '@reduxjs/toolkit';
 import PropTypes from 'prop-types';
 import { useDispatch } from 'react-redux';
 import { toast } from 'react-toastify';
-import { login, updateUser } from '../../userSlice';
-import LoginForm from '../LoginForm';
-import StorageKeys from '~/constants/storage-keys';
+import { forgetPass, login } from '../../userSlice';
+import ForgetPasswordForm from '../ForgetPasswordForm/ForgetPasswordForm';
 
-Login.propTypes = {
+ForgetPassword.propTypes = {
     closeDialog: PropTypes.func,
 };
 
-function Login({ closeDialog }) {
+function ForgetPassword({ closeDialog }) {
     const dispatch = useDispatch();
 
     const handleSubmit = async (values) => {
+        console.log("🚀 ~ file: ForgetPassword.jsx:16 ~ handleSubmit ~ values:", values)
         try {
-            const action = login(values);
+            const action = forgetPass(values);
             const resultAction = await dispatch(action);
             unwrapResult(resultAction);
 
             // do something here on register successfully
-            dispatch(updateUser(JSON.parse(localStorage.getItem(StorageKeys.USER))));
-
             if (closeDialog) {
                 closeDialog();
             }
         } catch (error) {
-            console.log('Failed to login: ', error);
+            console.log('Failed to send otp: ', error);
             toast.error(error.message);
         }
     };
 
-    return <LoginForm onSubmit={handleSubmit} />;
+    return <ForgetPasswordForm onSubmit={handleSubmit} />;
 }
 
-export default Login;
+export default ForgetPassword;
