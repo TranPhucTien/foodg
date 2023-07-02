@@ -28,6 +28,7 @@ function FormAuth({
     isSubmitting,
     changeMode,
     showOtp,
+    subNameLink,
 }) {
     return (
         <section className={cx('wrapper')}>
@@ -37,7 +38,13 @@ function FormAuth({
                 {name && (
                     <div className={cx('desc')}>
                         <span>{name}</span>
-                        <span className={cx('desc-link')}>{subName}</span>
+                        {subNameLink ? (
+                            <a href={subNameLink} className={cx('desc-link')}>
+                                {subName}
+                            </a>
+                        ) : (
+                            <span className={cx('desc-link')}>{subName}</span>
+                        )}
                     </div>
                 )}
                 {children}

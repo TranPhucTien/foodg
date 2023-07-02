@@ -53,6 +53,7 @@ function LoginForm(props) {
             title="Login"
             name="Email"
             subName="Login with google"
+            subNameLink="http://localhost:8080/oauth2/authorization/google"
             footerTitle="Don’t have an account?"
             footerSubTitle="Sign up"
             isSubmitting={isSubmitting}

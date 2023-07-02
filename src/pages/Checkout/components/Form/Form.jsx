@@ -189,11 +189,11 @@ function Form(props) {
                                 customerId: info.id,
                                 invoiceNumber: invoiceID,
                                 status: 0,
-                                paid: 0,
-                                idDiscount: 3,
+                                paid: 0
                             },
                             tblLineOutDtos: lines,
                         }),
+                        voucherDebounced
                     );
 
                     window.location.href = data['redirect_url'];

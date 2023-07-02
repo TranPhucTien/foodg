@@ -1,8 +1,8 @@
 import axiosClient from './axiosClient';
 
 export const invoiceApi = {
-    create(data) {
-        const url = `/invoices`;
+    create(data, codeDiscount) {
+        const url = `/invoices?codeDiscount=${codeDiscount}`;
         return axiosClient.post(url, data);
     },
 
