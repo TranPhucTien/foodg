@@ -9,8 +9,9 @@ import styles from './OtpAuthForm.module.scss';
 import { useState } from 'react';
 import OTPInput from 'react-otp-input';
 import StorageKeys from '~/constants/storage-keys';
-import { forgetPass, otpAuth } from '../../userSlice';
+import { forgetPass, otpAuth, register } from '../../userSlice';
 import { unwrapResult } from '@reduxjs/toolkit';
+import { toast } from 'react-toastify';
 
 const cx = classNames.bind(styles);
 
@@ -33,6 +34,21 @@ function OtpAuthForm(props) {
         },
         resolver: yupResolver(schema),
     });
+
+    const dispatch = useDispatch();
+
+    const resendOtp = async () => {
+        try {
+            const action = register(userData);
+            const resultAction = await dispatch(action);
+            unwrapResult(resultAction);
+
+            toast.success('Please check your email.');
+        } catch (error) {
+            console.log('Failed to send email: ', error);
+            // toast.error(error.message);
+        }
+    }
     
     const handleSubmit = async (event) => {
         event.preventDefault();
@@ -42,14 +58,6 @@ function OtpAuthForm(props) {
             await onSubmit({userData, otp});
         }
     };
-
-    const dispatch = useDispatch();
-
-    const resendOtp = async () => {
-        const action = forgetPass(userData);
-        const resultAction = await dispatch(action);
-        unwrapResult(resultAction);
-    }
 
     const { isSubmitting } = form.formState;
 

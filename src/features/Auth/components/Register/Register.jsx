@@ -15,14 +15,12 @@ function Register({ closeDialog }) {
 
     const handleSubmit = async (values) => {
         try {
+            delete values.id;
             const action = register(values);
             const resultAction = await dispatch(action);
             unwrapResult(resultAction);
 
             // do something here on register successfully
-            // if (closeDialog) {
-            //     closeDialog();
-            // }
             dispatch(showOtpAuthMode());
 
             toast.success('Please check your email.');

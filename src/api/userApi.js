@@ -31,7 +31,7 @@ export const customerApi = {
 
     forgetPass(data) {
         const url = '/customers/forgetPassword';
-        return axiosClient.patch(url);
+        return axiosClient.patch(url, data);
     },
 
     saveSession(data) {

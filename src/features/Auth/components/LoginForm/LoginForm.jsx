@@ -43,10 +43,10 @@ function LoginForm(props) {
     const changeMode = () => {
         dispatch(showRegisterMode());
     };
-    
+
     const showOtp = () => {
-        dispatch(showOtpAuthMode());
-    }
+        dispatch(showForgetPasswordMode());
+    };
 
     return (
         <FormAuth

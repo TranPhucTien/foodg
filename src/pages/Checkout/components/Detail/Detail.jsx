@@ -20,8 +20,8 @@ function Detail(props) {
     const { feeData } = props;
     const list = useSelector((state) => state.cart.cartItems);
     const listReverse = [...list].reverse();
-    const discountProduct = useSelector(totalDiscountSelector);
-    const discount = Number.parseFloat(discountProduct) + feeData.discount
+    // const discountProduct = useSelector(totalDiscountSelector);
+    const discount = feeData.discount
     const total = useSelector(state => cartTotalSelector(state, feeData.shippingCost, discount));
 
     return (

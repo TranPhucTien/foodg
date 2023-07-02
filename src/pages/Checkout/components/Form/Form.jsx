@@ -16,6 +16,7 @@ import { useState } from 'react';
 import { useEffect } from 'react';
 import mapApi from '~/api/mapApi';
 import voucherApi from '~/api/voucherApi';
+import invoiceApi from '~/api/invoiceApi';
 
 const cx = classNames.bind(styles);
 
@@ -150,14 +151,26 @@ function Form(props) {
 
     const { isSubmitting, errors } = form.formState;
     const total = Math.round(useSelector(cartTotalSelector) * 23000);
+    const invoiceID = Math.floor(Math.random() * 90000000) + 10000000;
+    const cartList = useSelector((state) => state.cart.cartItems);
+    const lines = cartList.map((item) => ({
+        idProduct: item.id,
+        quantity: item.quantity,
+        description: '',
+    }));
 
-    const handleSubmit = async () => {
+    const handleSubmit = async (values) => {
         const { onSubmit } = props;
+        localStorage.setItem(
+            StorageKeys.USER,
+            JSON.stringify({ ...info, address: values.address, phone: values.phone }),
+        );
         const bank = {
             vnp_OrderInfo: `Nap tien cho thue bao 0123456789. So tien ${total} VND`,
             vnp_Amount: `${total}`,
             vnp_OrderType: 'food',
             vnp_Locale: 'vn',
+            vnp_TxnRef: invoiceID,
         };
 
         axios
@@ -166,10 +179,25 @@ function Form(props) {
                     'Content-Type': 'application/x-www-form-urlencoded',
                 },
             })
-            .then((response) => {
+            .then(async (response) => {
                 let { data } = response.data;
                 console.log('🚀 ~ file: Form.jsx:166 ~ .then ~ data:', data);
-                window.location.href = data['redirect_url'];
+                if (data) {
+                    await invoiceApi.create(
+                        JSON.stringify({
+                            newInvoice: {
+                                customerId: info.id,
+                                invoiceNumber: invoiceID,
+                                status: 0,
+                                paid: 0,
+                                idDiscount: 3,
+                            },
+                            tblLineOutDtos: lines,
+                        }),
+                    );
+
+                    window.location.href = data['redirect_url'];
+                }
             })
             .catch((error) => {
                 console.error(error);

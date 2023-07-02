@@ -10,15 +10,18 @@ const SLUG = 'customers';
 export const register = createAsyncThunk(SLUG + '/register', async (payload) => {
     // Call API to register
     const data = await customerApi.register(payload);
+    console.log('🚀 ~ file: userSlice.js:13 ~ register ~ data:', data);
     const userData = data.data.data;
     console.log(userData);
 
     // Save data to local storage
     // localStorage.setItem(StorageKeys.TOKEN, data.jwt);
-    localStorage.setItem(StorageKeys.USER, JSON.stringify(userData));
+    if (userData) {
+        localStorage.setItem(StorageKeys.USER, JSON.stringify(userData));
+        return { id: userData.id, username: userData.username, email: userData.email };
+    }
 
-    // return user data
-    return { id: userData.id, username: userData.username, email: userData.email };
+    return {};
 });
 
 export const otpAuth = createAsyncThunk(SLUG + '/otp', async ({ userData, otp }) => {
@@ -29,10 +32,11 @@ export const otpAuth = createAsyncThunk(SLUG + '/otp', async ({ userData, otp })
     return data;
 });
 
-export const forgetPass = createAsyncThunk(SLUG + '/forgetPass', async (userData) => {
+export const forgetPass = createAsyncThunk(SLUG + '/forgetPassword', async (userData) => {
     const data = await customerApi.forgetPass(userData);
     const user = data.data.data;
-    console.log('🚀 ~ file: userSlice.js:24 ~ otpAuth ~ user:', user);
+    const current = JSON.parse(localStorage.getItem(StorageKeys.USER));
+    localStorage.setItem(StorageKeys.USER, JSON.stringify({ ...current, ...user }));
 
     return user;
 });

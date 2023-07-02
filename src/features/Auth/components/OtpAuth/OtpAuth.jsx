@@ -15,6 +15,7 @@ OtpAuth.propTypes = {
 function OtpAuth({ closeDialog }) {
     const dispatch = useDispatch();
     const handleSubmit = async ({ userData, otp }) => {
+        console.log("🚀 ~ file: OtpAuth.jsx:18 ~ handleSubmit ~ userData:", { userData, otp })
         const action = otpAuth({ userData, otp });
         const { payload } = await dispatch(action);
         const data = payload.data;

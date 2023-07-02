@@ -6,10 +6,7 @@ import * as yup from 'yup';
 import Button from '~/components/Button';
 import FormAuth from '~/components/FormAuth';
 import InputField from '~/components/formControl/InputField';
-import {
-    showOtpAuthMode,
-    showRegisterMode,
-} from '~/Layouts/components/Header/modeSlice';
+import { showOtpAuthMode, showRegisterMode } from '~/Layouts/components/Header/modeSlice';
 import styles from '../LoginForm/LoginForm.module.scss';
 
 const cx = classNames.bind(styles);
@@ -37,11 +34,10 @@ function ForgetPasswordForm(props) {
         resolver: yupResolver(schema),
     });
 
-    const dispatch = useDispatch();
-
     const handleSubmit = async (values) => {
+        console.log('🚀 ~ file: ForgetPasswordForm.jsx:43 ~ handleSubmit ~ values:', values);
+        console.log('submited');
         const { onSubmit } = props;
-        dispatch(showOtpAuthMode());
 
         if (onSubmit) {
             await onSubmit(values);
@@ -50,6 +46,7 @@ function ForgetPasswordForm(props) {
 
     const { isSubmitting } = form.formState;
 
+    const dispatch = useDispatch();
     const changeMode = () => {
         dispatch(showRegisterMode());
     };
@@ -65,10 +62,10 @@ function ForgetPasswordForm(props) {
         >
             <form onSubmit={form.handleSubmit(handleSubmit)}>
                 <InputField name="email" label="Email" form={form} />
-                <InputField type="password" name="password" label="New password" form={form} />
-                <InputField type="password" name="password-retype" label="Retype password" form={form} />
+                <InputField type="password" name="password" label="Password" form={form} />
+                <InputField type="password" name="retypePassword" label="Retype Password" form={form} />
                 <Button disabled={isSubmitting} primary large fullWidth className={cx('button')}>
-                    Send OTP
+                    Sent OTP
                 </Button>
             </form>
         </FormAuth>

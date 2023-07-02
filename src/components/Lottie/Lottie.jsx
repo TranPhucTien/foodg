@@ -6,6 +6,7 @@ import emptyCart from '~/assets/lottie/empty_cart3.json';
 import emptyProduct from '~/assets/lottie/empty_cart5.json';
 import login from '~/assets/lottie/login.json';
 import successful from '~/assets/lottie/successful.json';
+import failed from '~/assets/lottie/failed.json';
 import notFound from '~/assets/lottie/notFound3.json';
 
 // const config = {
@@ -107,6 +108,24 @@ function SuccessfulLottie() {
     return <div ref={anime}></div>;
 }
 
+function FailedLottie() {
+    const anime = useRef(null);
+
+    useEffect(() => {
+        lottie.loadAnimation({
+            ...configLoop,
+            loop: false,
+            container: anime.current,
+            animationData: failed,
+            name: 'failed',
+        });
+
+        return () => lottie.stop();
+    }, []);
+
+    return <div ref={anime}></div>;
+}
+
 function NotFoundLottie() {
     const anime = useRef(null);
 
@@ -124,4 +143,4 @@ function NotFoundLottie() {
     return <div ref={anime}></div>;
 }
 
-export { ShipperLottie, EmptyCartLottie, LoginLottie, EmptyProductLottie, SuccessfulLottie, NotFoundLottie };
+export { ShipperLottie, EmptyCartLottie, LoginLottie, EmptyProductLottie, SuccessfulLottie, FailedLottie, NotFoundLottie };

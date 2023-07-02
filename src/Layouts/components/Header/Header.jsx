@@ -172,7 +172,7 @@ function Header() {
                     {mode === MODE.REGISTER && <Register closeDialog={handleCloseAuth} />}
                     {mode === MODE.LOGIN && <Login closeDialog={handleCloseAuth} />}
                     {mode === MODE.OTP_AUTH && <OtpAuth closeDialog={handleCloseAuth} />}
-                    {mode === MODE.FORGE_PASSWORD && <ForgetPassword closeDialog={handleCloseAuth} />}
+                    {/* {mode === MODE.FORGE_PASSWORD && <ForgetPassword closeDialog={handleCloseAuth} />} */}
                 </DialogContent>
             </Dialog>
         </header>
