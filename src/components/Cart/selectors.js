@@ -32,8 +32,8 @@ export const cartTotalSelector = createSelector(
                 }
                 return total + priceItem * item.quantity;
             }, 0) +
-            fee -
-            discount
+            Number.parseFloat(fee) -
+            Number.parseFloat(discount)
         ).toFixed(2),
 );
 

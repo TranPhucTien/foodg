@@ -33,6 +33,11 @@ export const customerApi = {
         const url = '/customers/forgetPassword';
         return axiosClient.patch(url);
     },
+
+    saveSession(data) {
+        const url = `/customer/loginsuccess?_emailUser=${data.email}&_passwordUser=${data.password}`
+        return axiosClient.get(url);
+    }
 };
 
 export default userApi;

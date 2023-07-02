@@ -31,9 +31,7 @@ Header.propTypes = {};
 
 function Header() {
     const loggedInUser = useSelector((state) => state.user.current);
-    console.log("🚀 ~ file: Header.jsx:34 ~ Header ~ loggedInUser:", loggedInUser)
     const isLoggedIn = !!loggedInUser?.username;
-    console.log("🚀 ~ file: Header.jsx:35 ~ Header ~ isLoggedIn:", isLoggedIn)
     const mode = useSelector((state) => state.mode.mode);
     const fullName = useSelector((state) => state.user.current?.fullName);
     const [background, setBackground] = useState(false);

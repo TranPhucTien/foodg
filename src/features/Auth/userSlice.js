@@ -39,6 +39,8 @@ export const forgetPass = createAsyncThunk(SLUG + '/forgetPass', async (userData
 export const login = createAsyncThunk(SLUG + '/loginCustomer', async (payload) => {
     // Call API to register
     const data = await customerApi.login(payload);
+    const saveSession = await customerApi.saveSession(payload);
+    console.log('🚀 ~ file: userSlice.js:44 ~ login ~ saveSession:', saveSession);
 
     if (data.data.data == null) {
         toast.error(data.data.message);

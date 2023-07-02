@@ -1,23 +1,21 @@
 import { yupResolver } from '@hookform/resolvers/yup';
 import classNames from 'classnames/bind';
 import { useForm } from 'react-hook-form';
-import { Controller } from 'react-hook-form';
 import qs from 'query-string';
 import { useSelector } from 'react-redux';
-import { useNavigate } from 'react-router-dom';
 import * as yup from 'yup';
 import Button from '~/components/Button';
 import InputField from '~/components/formControl/InputField';
 import StorageKeys from '~/constants/storage-keys';
-import FormSelect from '../FormSelect';
 import styles from './Form.module.scss';
-import { cartTotalSelector } from '~/components/Cart/selectors';
+import { cartTotalSelector, totalDiscountSelector } from '~/components/Cart/selectors';
 import axios from 'axios';
 import { useRef } from 'react';
 import { useDebounce } from '~/hooks';
 import { useState } from 'react';
 import { useEffect } from 'react';
 import mapApi from '~/api/mapApi';
+import voucherApi from '~/api/voucherApi';
 
 const cx = classNames.bind(styles);
 
@@ -26,6 +24,7 @@ Form.propTypes = {};
 function Form(props) {
     const mapRef = useRef();
     const { onDataChanged } = props;
+    const totalPrice = useSelector((state) => cartTotalSelector(state, 0, 0));
 
     const schema = yup
         .object({
@@ -44,18 +43,39 @@ function Form(props) {
                 .min(10, 'Phone number is not valid.')
                 .max(10, 'Phone number is not valid.')
                 .test('must phone number', 'Phone number is not valid.', (value) => value[0] === '0'),
-            voucher: yup.object().nullable(),
+            voucher: yup
+                .string()
+                .optional()
+                .default('')
+                .test('voucher_validation', function (value) {
+                    // Use function
+                    if (value.trim().length !== 0) {
+                        return voucherApi
+                            .checkVoucher(value, totalPrice)
+                            .then((res) => {
+                                const { data } = res;
+                                console.log('API Response:', data.message);
+                                if (!data.data) {
+                                    return this.createError({ message: data.message });
+                                }
+                            })
+                            .catch((e) => {
+                                console.log(e);
+                            });
+                        }
+                        return true;
+                    }),
             distance: yup.string().test('is-longer-than-10km', 'Distance must be less than 10km', (value) => {
                 const distance = value.split(' ');
                 const distanceNum = parseFloat(distance[0]);
                 const distanceCode = distance[1];
 
                 if (distanceCode === 'km') {
-                    if (!isNaN(distanceNum) && distanceNum < 10) {
-                        return true;
+                    if (isNaN(distanceNum) || distanceNum > 10) {
+                        return false;
                     }
                 }
-                return false;
+                return true;
             }),
         })
         .required();
@@ -71,10 +91,12 @@ function Form(props) {
         duration: '',
         distance: '0 km',
         img: '',
-        price: 0
+        price: 0,
     });
 
+    const [voucherValue, setVoucherValue] = useState('');
     const debouncedValue = useDebounce(mapValue, 1000);
+    const voucherDebounced = useDebounce(voucherValue, 1000);
 
     useEffect(() => {
         (async () => {
@@ -86,6 +108,13 @@ function Form(props) {
             }
         })();
     }, [debouncedValue]);
+
+    useEffect(() => {
+        (async () => {
+            const result = (await voucherApi.checkVoucher(voucherDebounced, Number.parseFloat(totalPrice))).data;
+            if (onDataChanged) onDataChanged({ discount: result?.data || 0 });
+        })();
+    }, [voucherDebounced]);
 
     const form = useForm({
         defaultValues: {
@@ -111,6 +140,13 @@ function Form(props) {
         }
     };
 
+    const handleChangeVoucher = (e) => {
+        const searchValue = e.target.value.trim();
+        if (!searchValue.startsWith(' ')) {
+            setVoucherValue(searchValue);
+        }
+    };
+
     const { isSubmitting, errors } = form.formState;
     const total = Math.round(useSelector(cartTotalSelector) * 23000);
 
@@ -122,11 +158,7 @@ function Form(props) {
             vnp_OrderType: 'food',
             vnp_Locale: 'vn',
         };
-        // console.log('form submit: ', qs.stringify(bank));
-        // localStorage.setItem(StorageKeys.USER_INFO, JSON.stringify(values));
-        // navigate({ pathname: 'successful' });
-        // localStorage.removeItem(StorageKeys.CART_ITEMS);
-        // window.location.reload(true);
+
         axios
             .post('http://localhost:8080/api/vnpay/make', qs.stringify(bank), {
                 headers: {
@@ -135,6 +167,7 @@ function Form(props) {
             })
             .then((response) => {
                 let { data } = response.data;
+                console.log('🚀 ~ file: Form.jsx:166 ~ .then ~ data:', data);
                 window.location.href = data['redirect_url'];
             })
             .catch((error) => {
@@ -178,7 +211,13 @@ function Form(props) {
                         <InputField className={cx('input')} name="phone" label="Phone (*)" form={form} />
                     </div>
                     <div className={cx('col l-6')}>
-                        <InputField className={cx('input')} name="voucher" label="Voucher" form={form} />
+                        <InputField
+                            className={cx('input')}
+                            name="voucher"
+                            label="Voucher"
+                            form={form}
+                            onInput={handleChangeVoucher}
+                        />
                     </div>
                 </div>
                 {errors?.distance && <span className="primary">{errors.distance.message}</span>}
@@ -188,7 +227,7 @@ function Form(props) {
                     fullWidth
                     className={cx('submit')}
                 >
-                    Check out
+                    Bank transfer
                 </Button>
             </form>
         </div>
