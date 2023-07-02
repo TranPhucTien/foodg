@@ -15,6 +15,7 @@ export const register = createAsyncThunk(SLUG + '/register', async (payload) => 
 
     // Save data to local storage
     // localStorage.setItem(StorageKeys.TOKEN, data.jwt);
+    localStorage.setItem(StorageKeys.USER, JSON.stringify(userData));
 
     // return user data
     return { id: userData.id, username: userData.username, email: userData.email };

@@ -17,7 +17,6 @@ function OtpAuth({ closeDialog }) {
     const handleSubmit = async ({ userData, otp }) => {
         const action = otpAuth({ userData, otp });
         const { payload } = await dispatch(action);
-        console.log('🚀 ~ file: OtpAuth.jsx:20 ~ handleSubmit ~ payload:', payload);
         const data = payload.data;
 
         if (data.status === 'OK') {
