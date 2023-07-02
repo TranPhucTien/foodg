@@ -58,13 +58,14 @@ function Form(props) {
                                 if (!data.data) {
                                     return this.createError({ message: data.message });
                                 }
+                                return true;
                             })
                             .catch((e) => {
                                 console.log(e);
                             });
-                        }
-                        return true;
-                    }),
+                    }
+                    return true;
+                }),
             distance: yup.string().test('is-longer-than-10km', 'Distance must be less than 10km', (value) => {
                 const distance = value.split(' ');
                 const distanceNum = parseFloat(distance[0]);
